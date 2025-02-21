@@ -11,6 +11,7 @@
         <Reference Include="Assembly-CSharp"/>
         <Reference Include="Axwabo.CommandSystem"/>
         <Reference Include="Axwabo.Helpers"/>
+        <Reference Include="CommandSystem.Core"/>
         <Reference Include="LabApi"/>
         <Reference Include="Mirror"/>
         <Reference Include="Pooling"/>
