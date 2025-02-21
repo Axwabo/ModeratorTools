@@ -5,6 +5,7 @@
         <LangVersion>12</LangVersion>
         <PlatformTarget>x64</PlatformTarget>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     
     <ItemGroup>

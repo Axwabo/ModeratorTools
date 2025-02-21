@@ -5,6 +5,6 @@
 public sealed class JailCommand : SeparatedTargetingCommand
 {
 
-    protected override CommandResult ExecuteOn(ReferenceHub target, ArraySegment<string> arguments, CommandSender sender) => target.TryJail();
+    protected override CommandResult ExecuteOn(ReferenceHub target, ArraySegment<string> arguments, CommandSender sender) => target.TryJail(sender);
 
 }
