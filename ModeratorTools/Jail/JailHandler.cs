@@ -28,7 +28,9 @@ public static class JailHandler
             return false;
         if (sender != null && hub.queryProcessor._sender != sender)
             PreviouslyJailedGUI.AddPlayer(sender, hub);
-        Entries[id] = new JailEntry(hub.GetInfoWithRole());
+        var info = hub.GetInfoWithRole();
+        JailPositionValidator.ValidateEntry(hub, info.Info);
+        Entries[id] = new JailEntry(info);
         hub.inventory.ClearEverything();
         hub.roleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin);
         return true;
@@ -39,12 +41,15 @@ public static class JailHandler
         var id = hub.authManager.UserId;
         if (!Entries.TryGetValue(id, out var entry))
             return false;
-        // TODO: pocket dimension, decontaminated light & warhead teleportation
         Entries.Remove(id);
-        if (entry.ThisRound)
-            entry.Info.SetClassAndApplyInfo(Player.Get(hub));
-        else
+        if (!entry.ThisRound)
+        {
             hub.roleManager.ServerSetRole(RoleTypeId.Spectator, RoleChangeReason.RemoteAdmin);
+            return true;
+        }
+
+        JailPositionValidator.ValidateExit(entry.Info.Info);
+        entry.Info.SetClassAndApplyInfo(Player.Get(hub));
         return true;
     }
 
