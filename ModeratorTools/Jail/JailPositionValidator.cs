@@ -1,4 +1,5 @@
 ﻿using Axwabo.Helpers.PlayerInfo;
+using Axwabo.Helpers.PlayerInfo.Effect;
 using CustomPlayerEffects;
 using LabApi.Features.Wrappers;
 using LightContainmentZoneDecontamination;
@@ -12,19 +13,22 @@ public static class JailPositionValidator
 
     private static readonly FacilityZone[] ValidExitZones = [FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance, FacilityZone.Surface];
 
-    private static Vector3 RandomPosition(FacilityZone zone) => Scp106PocketExitFinder.GetPosesForZone(zone).RandomItem().position;
+    private static Vector3 RandomPosition(FacilityZone zone) => Scp106PocketExitFinder.GetPosesForZone(zone).RandomItem().position + Vector3.up;
 
     public static void ValidateEntry(ReferenceHub hub, PlayerInfoBase info)
     {
-        if (!TryGetConfig(out var config)
-            || !config.PocketFix
-            || !Room.TryGetRoomAtPosition(info.Position, out var room)
-            || room.Name != RoomName.Pocket)
+        if (!TryGetConfig(out var config) || !config.PocketFix)
             return;
-        var capturePosition = hub.playerEffectsController.GetEffect<PocketCorroding>().CapturePosition.Position;
-        info.Position = Room.TryGetRoomAtPosition(capturePosition, out _)
+        var effect = hub.playerEffectsController.GetEffect<PocketCorroding>();
+        if (!effect.IsEnabled)
+            return;
+        var capturePosition = effect.CapturePosition.Position;
+        info.Position = Room.TryGetRoomAtPosition(capturePosition, out var captureRoom) && captureRoom.Name != RoomName.Pocket
             ? capturePosition
             : RandomPosition(ValidExitZones.RandomItem());
+        foreach (var effectInfo in info.Effects)
+            if (effectInfo is StandardEffectInfo {EffectType: EffectType.PocketCorroding or EffectType.Sinkhole})
+                effectInfo.IsEnabled = false;
     }
 
     public static void ValidateExit(PlayerInfoBase info)
@@ -37,7 +41,9 @@ public static class JailPositionValidator
             return;
         }
 
-        if (!config.DecontaminationTeleport || info.Position.y is > DecontaminationController.UpperBoundLCZ or < DecontaminationController.LowerBoundLCZ)
+        if (!config.DecontaminationTeleport
+            || !Decontamination.IsDecontaminating
+            || info.Position.y is > DecontaminationController.UpperBoundLCZ or < DecontaminationController.LowerBoundLCZ)
             return;
         var room = Room.Get(Random.value < 0.5f ? RoomName.HczCheckpointA : RoomName.HczCheckpointB).FirstOrDefault();
         if (room != null)
