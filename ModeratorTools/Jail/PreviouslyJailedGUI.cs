@@ -16,10 +16,15 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
 {
 
     private const string Buttons = "<color=red>▼ Previous Entry</color>       <color=red>▼ Next Entry</color>             <color=red>▼ Expose Data</color>         <color=red>▼ Clear List</color>";
+    private const string CopyId = "<color=green><link=CP_ID>\uf0c5</link></color>";
+    private const string CopyUserId = "<color=green><link=CP_USERID>\uF0C5</link></color>";
+    private const string CopyIp = "<color=green><link=CP_IP>\uF0C5</link></color>";
 
     private static readonly Dictionary<string, List<PreviouslyJailed>> PreviouslyJailedPlayers = new();
     private static readonly Dictionary<string, int> Indexes = new();
+
     private static readonly string VerticalPadding = new('\n', 17);
+    private static readonly string DataPadding = new('\n', 14);
 
     protected override string OnBasicInfoClicked(PlayerCommandSender sender) => TurnPage(sender, false);
 
@@ -57,11 +62,12 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
         Indexes[sender.SenderId] = index;
         var entry = list[index];
         RaClipboard.Send(sender, RaClipboard.RaClipBoardType.PlayerId, entry.Nickname);
-        return ($"#{index + 1}\n" +
-                $"Nickname: {entry.Nickname} <color=green><link=CP_ID>\uF0C5</link></color>\n" +
-                "UserID: [REDACTED]\n" +
-                "IP Address: [REDACTED]").Color("yellow") +
-               new string('\n', 14) + Buttons;
+        return $"""
+                #{index + 1}
+                Nickname: {entry.Nickname} {CopyId}
+                UserID: [REDACTED]
+                IP Address: [REDACTED]
+                """.Color("yellow") + DataPadding + Buttons;
     }
 
     private static string ExposeData(CommandSender sender)
@@ -74,11 +80,12 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
         RaClipboard.Send(sender, RaClipboard.RaClipBoardType.PlayerId, entry.Nickname);
         RaClipboard.Send(sender, RaClipboard.RaClipBoardType.UserId, entry.UserID);
         RaClipboard.Send(sender, RaClipboard.RaClipBoardType.Ip, entry.IPAddress);
-        return ($"#{index + 1}\n" +
-                $"Nickname: {entry.Nickname} <color=green><link=CP_ID>\uF0C5</link></color>\n" +
-                $"UserID: {entry.UserID} <color=green><link=CP_USERID>\uF0C5</link></color>\n" +
-                $"IP Address: {entry.IPAddress} <color=green><link=CP_IP>\uF0C5</link></color>").Color("yellow") +
-               new string('\n', 14) + Buttons;
+        return $"""
+                #{index + 1}
+                Nickname: {entry.Nickname} {CopyId}
+                UserID: {entry.UserID} {CopyUserId}
+                IP Address: {entry.IPAddress} {CopyIp}
+                """.Color("yellow") + DataPadding + Buttons;
     }
 
     public static void AddPlayer(CommandSender sender, ReferenceHub target)
