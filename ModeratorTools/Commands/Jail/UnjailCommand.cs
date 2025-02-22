@@ -1,4 +1,6 @@
-﻿namespace ModeratorTools.Jail;
+﻿using ModeratorTools.Jail;
+
+namespace ModeratorTools.Commands.Jail;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "unjail", "Unjails the specified players")]
 [VanillaPermissions(PlayerPermissions.PlayersManagement)]
