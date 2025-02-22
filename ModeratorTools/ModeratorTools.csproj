@@ -10,6 +10,7 @@
     
     <ItemGroup>
         <Reference Include="Assembly-CSharp"/>
+        <Reference Include="Assembly-CSharp-firstpass"/>
         <Reference Include="Axwabo.CommandSystem"/>
         <Reference Include="Axwabo.Helpers"/>
         <Reference Include="CommandSystem.Core"/>
