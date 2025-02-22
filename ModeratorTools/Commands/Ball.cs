@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using Footprinting;
+﻿using Footprinting;
 using InventorySystem;
 using InventorySystem.Items.Pickups;
 using InventorySystem.Items.ThrowableProjectiles;
 using LabApi.Features.Wrappers;
 using Mirror;
 using RemoteAdmin;
-using UnityEngine;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
 namespace ModeratorTools.Commands;

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ModeratorTools.Commands.Jail;
+﻿namespace ModeratorTools.Commands.Jail;
 
 internal static class JailWithMeHelpers
 {

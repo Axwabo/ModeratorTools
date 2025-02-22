@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Axwabo.CommandSystem.Commands.Interfaces;
 using ModeratorTools.Jail;
 
 namespace ModeratorTools.Commands.Jail;
