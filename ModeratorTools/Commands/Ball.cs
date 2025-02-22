@@ -5,7 +5,6 @@ using InventorySystem.Items.Pickups;
 using InventorySystem.Items.ThrowableProjectiles;
 using LabApi.Features.Wrappers;
 using Mirror;
-using PlayerRoles.FirstPersonControl;
 using RemoteAdmin;
 using UnityEngine;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
@@ -14,6 +13,7 @@ namespace ModeratorTools.Commands;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "ball", "Spawns a bouncy ball (SCP-018) on the specified players")]
 [ModeratorPermissions("ball", PlayerPermissions.GivingItems)]
+[ShouldAffectSpectators(false)]
 public sealed class Ball : UnifiedTargetingCommand
 {
 
@@ -44,7 +44,7 @@ public sealed class Ball : UnifiedTargetingCommand
 
     private bool SpawnBall(ReferenceHub hub, CommandSender sender)
     {
-        if (hub.roleManager.CurrentRole is not IFpcRole {FpcModule.Position: var position})
+        if (!hub.TryGetPosition(out var position))
             return false;
         var grenade = Object.Instantiate(_template, position, Quaternion.identity);
         grenade.PreviousOwner = new Footprint(sender is PlayerCommandSender {ReferenceHub: var senderHub} ? senderHub : ReferenceHub._hostHub);
