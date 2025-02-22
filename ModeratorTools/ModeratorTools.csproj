@@ -17,6 +17,7 @@
         <Reference Include="Mirror"/>
         <Reference Include="Pooling"/>
         <Reference Include="UnityEngine.CoreModule"/>
+        <Reference Include="UnityEngine.PhysicsModule"/>
     </ItemGroup>
 
 </Project>
