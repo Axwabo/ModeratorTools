@@ -3,8 +3,13 @@ using LabApi.Loader.Features.Plugins;
 
 namespace ModeratorTools;
 
+[ModeratorPermissionsResolver]
 public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
 {
+    
+    internal static ModeratorToolsPlugin Instance { get; private set; }
+
+    internal static ModeratorToolsConfig Cfg => Instance?.Config;
 
     public override string Name => "ModeratorTools";
     public override string Description => "Tools for server staff";
@@ -12,8 +17,16 @@ public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
     public override Version Version => GetType().Assembly.GetName().Version;
     public override Version RequiredApiVersion { get; } = new(1, 0, 0);
 
-    public override void Enable() => CommandRegistrationProcessor.RegisterAll(this);
+    public override void Enable()
+    {
+        Instance = this;
+        CommandRegistrationProcessor.RegisterAll(this);
+    }
 
-    public override void Disable() => CommandRegistrationProcessor.RegisterAll(this);
+    public override void Disable()
+    {
+        Instance = null;
+        CommandRegistrationProcessor.UnregisterAll(this);
+    }
 
 }

@@ -3,7 +3,7 @@
 namespace ModeratorTools.Commands.Jail;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "jail", "Jails the specified players")]
-[VanillaPermissions(PlayerPermissions.PlayersManagement)]
+[ModeratorPermissions("jail.jail", PlayerPermissions.PlayersManagement)]
 public sealed class JailCommand : SeparatedTargetingCommand
 {
 

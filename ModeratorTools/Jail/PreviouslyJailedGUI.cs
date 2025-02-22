@@ -9,7 +9,7 @@ using RemoteAdmin.Communication;
 namespace ModeratorTools.Jail;
 
 [RemoteAdminOptionIdentifier("jailed")]
-[StringPermissions("jail.view")]
+[ModeratorPermissions("jail.history", PlayerPermissions.PlayersManagement)]
 [StaticOptionText("Previously Jailed", "#ff00ee")]
 [OptionIcon("🔒", OverallColor = "#ff00ee", ShouldBlink = false)]
 [VisibleByDefault]
@@ -26,7 +26,7 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
 
     protected override string OnRequestIPClicked(PlayerCommandSender sender) => TurnPage(sender, true);
 
-    [StringPermissions("jail.data")]
+    [ModeratorPermissions("jail.data", PlayerPermissions.PlayerSensitiveDataAccess)]
     protected override string OnRequestAuthClicked(PlayerCommandSender sender) => ExposeData(sender);
 
     protected override string OnExternalLookupClicked(PlayerCommandSender sender) => ClearList(sender);
