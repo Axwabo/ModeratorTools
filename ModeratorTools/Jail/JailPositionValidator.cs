@@ -1,4 +1,5 @@
-﻿using Axwabo.Helpers.PlayerInfo;
+﻿using Axwabo.CommandSystem.Extensions;
+using Axwabo.Helpers.PlayerInfo;
 using Axwabo.Helpers.PlayerInfo.Effect;
 using CustomPlayerEffects;
 using LabApi.Features.Wrappers;
@@ -48,6 +49,24 @@ public static class JailPositionValidator
         var room = Room.Get(Random.value < 0.5f ? RoomName.HczCheckpointA : RoomName.HczCheckpointB).FirstOrDefault();
         if (room != null)
             info.Position = room.Position + Vector3.up;
+    }
+
+    public static CommandResult TryGetCustomJailPosition(int index, out Vector3 position)
+    {
+        if (!TryGetConfig(out var config))
+        {
+            position = Vector3.zero;
+            return "!Couldn't find custom configured positions.";
+        }
+
+        if (index < 0 || index >= config.ExtraPositions.Count)
+        {
+            position = Vector3.zero;
+            return $"!Invalid index. There are only {"extra position".PluralizeWithCount(config.ExtraPositions.Count)}.";
+        }
+
+        position = (Vector3) config.ExtraPositions[index] + Vector3.up;
+        return true;
     }
 
     private static bool TryGetConfig(out JailConfig config)
