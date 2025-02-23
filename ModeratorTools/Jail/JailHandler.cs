@@ -9,7 +9,7 @@ public static class JailHandler
 
     private static readonly Dictionary<string, JailEntry> Entries = [];
 
-    public static void OnRoundRestarted()
+    internal static void OnRoundStarted()
     {
         foreach (var kvp in Entries.ToList())
         {
