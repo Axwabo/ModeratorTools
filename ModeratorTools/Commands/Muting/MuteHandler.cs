@@ -7,7 +7,7 @@ public static class MuteHandler
 
     public static readonly HashSet<string> LobbyMutes = [];
 
-    public static bool IsMuteApplicable(this Player player) => player.IsNorthwoodStaff || player.UserGroup is {Permissions: not 0};
+    public static bool IsMuteApplicable(this Player player) => !player.IsNorthwoodStaff && !player.RemoteAdminAccess;
 
     internal static void OnJoined(Player player)
     {
