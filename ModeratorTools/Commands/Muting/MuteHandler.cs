@@ -9,7 +9,7 @@ public static class MuteHandler
 
     public static bool IsMuteApplicable(this Player player) => player.IsNorthwoodStaff || player.UserGroup is {Permissions: not 0};
 
-    public static void OnJoined(Player player)
+    internal static void OnJoined(Player player)
     {
         if (LobbyMutes.Count == 0 || !player.IsMuteApplicable())
             return;

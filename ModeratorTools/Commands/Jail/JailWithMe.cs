@@ -5,6 +5,7 @@ namespace ModeratorTools.Commands.Jail;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "jailWithMe", "Jails you and the specified players", "jwm")]
 [PlayerOnlyCommand]
+[Usage("[index]")]
 public sealed class JailWithMe : JailCommand, ICustomResultCompiler
 {
 

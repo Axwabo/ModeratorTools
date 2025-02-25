@@ -25,6 +25,8 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
 
     private static readonly string VerticalPadding = new('\n', 17);
     private static readonly string DataPadding = new('\n', 14);
+    private static readonly string NotJailedAnyoneYet = "You have not jailed anyone yet.".Color("red") + VerticalPadding + Buttons;
+    private static readonly string NotSelectedPlayerYet = "You have not selected a player yet.".Color("red") + VerticalPadding + Buttons;
 
     protected override string OnBasicInfoClicked(PlayerCommandSender sender) => TurnPage(sender, false);
 
@@ -45,7 +47,7 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
     private static string TurnPage(CommandSender sender, bool forwards)
     {
         if (!PreviouslyJailedPlayers.TryGetValue(sender.SenderId, out var list) || list.Count < 1)
-            return "You have not jailed anyone yet.".Color("red") + VerticalPadding + Buttons;
+            return NotJailedAnyoneYet;
         if (!Indexes.TryGetValue(sender.SenderId, out var index))
             Indexes[sender.SenderId] = index = 0;
         else if (forwards)
@@ -73,9 +75,9 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
     private static string ExposeData(CommandSender sender)
     {
         if (!PreviouslyJailedPlayers.TryGetValue(sender.SenderId, out var list) || list.Count < 1)
-            return "You have not jailed anyone yet.".Color("red") + VerticalPadding + Buttons;
+            return NotJailedAnyoneYet;
         if (!Indexes.TryGetValue(sender.SenderId, out var index) || index < 0 || index >= list.Count)
-            return "You have not selected a player yet.".Color("red") + VerticalPadding + Buttons;
+            return NotSelectedPlayerYet;
         var entry = list[index];
         RaClipboard.Send(sender, RaClipboard.RaClipBoardType.PlayerId, entry.Nickname);
         RaClipboard.Send(sender, RaClipboard.RaClipBoardType.UserId, entry.UserID);
