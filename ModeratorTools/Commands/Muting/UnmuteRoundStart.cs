@@ -1,6 +1,6 @@
 namespace ModeratorTools.Commands.Muting;
 
-[CommandProperties("roundStart", "Unmutes players in the lobby")]
+[CommandProperties("roundStart", "Unmutes players in the lobby", "rs")]
 public sealed class UnmuteRoundStart : CommandBase
 {
 

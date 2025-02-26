@@ -2,7 +2,7 @@ using LabApi.Features.Wrappers;
 
 namespace ModeratorTools.Commands.Muting;
 
-[CommandProperties("all", "Unmutes every non-staff")]
+[CommandProperties("all", "Unmutes every non-staff", "*")]
 public sealed class UnmuteAll : CommandBase
 {
 

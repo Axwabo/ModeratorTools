@@ -2,7 +2,7 @@ using LabApi.Features.Wrappers;
 
 namespace ModeratorTools.Commands.Muting;
 
-[CommandProperties("all", "Temporarily mutes every non-staff")]
+[CommandProperties("all", "Temporarily mutes every non-staff", "*")]
 public sealed class MuteAll : CommandBase
 {
 

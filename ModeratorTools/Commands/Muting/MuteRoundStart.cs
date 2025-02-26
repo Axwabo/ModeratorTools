@@ -2,7 +2,7 @@
 
 namespace ModeratorTools.Commands.Muting;
 
-[CommandProperties("roundStart", "Temporarily mutes the players in the lobby")]
+[CommandProperties("roundStart", "Temporarily mutes the players in the lobby", "rs")]
 public sealed class MuteRoundStart : CommandBase
 {
 
