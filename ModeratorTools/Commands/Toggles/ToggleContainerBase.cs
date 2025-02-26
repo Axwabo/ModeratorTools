@@ -1,18 +1,22 @@
-﻿using Axwabo.CommandSystem.Extensions;
+﻿using System.Reflection;
+using Axwabo.CommandSystem.Extensions;
 
 namespace ModeratorTools.Commands.Toggles;
 
-public abstract class ToggleCommandBase : SeparatedTargetingCommand, ICustomResultCompiler
+public abstract class ToggleContainerBase : ContainerCommand
 {
 
-    public override string Name => "toggle";
+    protected string FeatureName { get; }
 
-    public override string Description => $"Toggles {Info.Name} for the specified players";
+    protected ToggleContainerBase()
+    {
+        var type = GetType();
+        FeatureName = type.GetCustomAttribute<ToggleFeatureAttribute>()?.Name ?? throw new MissingFeatureNameException(type);
+    }
 
     protected abstract ToggleCommandInfo Info { get; }
 
-    protected override CommandResult ExecuteOn(ReferenceHub target, ArraySegment<string> arguments, CommandSender sender)
-        => Info.Toggle(target);
+    // TODO: method-based subcommands
 
     public CommandResult? CompileResultCustom(List<CommandResultOnTarget> success, List<CommandResultOnTarget> failures) => (success.Count, failures.Count) switch
     {
