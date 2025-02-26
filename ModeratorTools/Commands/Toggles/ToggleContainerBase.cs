@@ -20,6 +20,7 @@ public abstract class ToggleContainerBase : ContainerCommand
 
     [MethodBasedSubcommand]
     [ToggleDescription("Lists all players with {0} enabled")]
+    [Aliases("l")]
     public CommandResult List(ArraySegment<string> arguments, CommandSender sender)
     {
         var nicknames = new List<string>();
@@ -33,6 +34,7 @@ public abstract class ToggleContainerBase : ContainerCommand
 
     [MethodBasedSubcommand]
     [ToggleDescription("Toggles {0} for the specified players")]
+    [Aliases("t")]
     public CommandResult Toggle(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
     {
         var enabled = new List<string>();
@@ -53,6 +55,7 @@ public abstract class ToggleContainerBase : ContainerCommand
 
     [MethodBasedSubcommand]
     [ToggleDescription("Disables {0} for all players")]
+    [Aliases("c")]
     public CommandResult Clear(ArraySegment<string> arguments, CommandSender sender)
     {
         foreach (var (_, data) in PlayerDataManager.Defined)
@@ -62,11 +65,13 @@ public abstract class ToggleContainerBase : ContainerCommand
 
     [MethodBasedSubcommand]
     [ToggleDescription("Enables {0} for the specified players")]
+    [Aliases("e")]
     public CommandResult Enable(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
         => this.ChangedResults(SetState(targets, true), ToggleCommandExtensions.Enabled, ToggleCommandExtensions.Enabled);
 
     [MethodBasedSubcommand]
     [ToggleDescription("Disables {0} for the specified players")]
+    [Aliases("d")]
     public CommandResult Disable(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
         => this.ChangedResults(SetState(targets, false), ToggleCommandExtensions.Disabled, ToggleCommandExtensions.Disabled);
 
