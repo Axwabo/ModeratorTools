@@ -7,6 +7,7 @@ namespace ModeratorTools.Commands.Jail;
 [CommandProperties(CommandHandlerType.RemoteAdmin, "jail", "Jails the specified players")]
 [ModeratorPermissions("jail.jail", PlayerPermissions.PlayersManagement)]
 [Usage("[index]")]
+[ShouldAffectSpectators]
 public class JailCommand : SeparatedTargetingCommand, ITargetingPreExecutionFilter
 {
 
