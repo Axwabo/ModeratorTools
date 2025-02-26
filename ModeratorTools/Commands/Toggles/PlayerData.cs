@@ -9,4 +9,6 @@ public sealed class PlayerData
 
     public bool Scp096Immunity { get; set; }
 
+    public bool Scp173Immunity { get; set; }
+
 }
