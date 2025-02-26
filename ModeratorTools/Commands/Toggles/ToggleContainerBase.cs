@@ -1,12 +1,16 @@
 ﻿using System.Reflection;
-using Axwabo.CommandSystem.Extensions;
+using Axwabo.CommandSystem.Attributes.Containers;
+
+// ReSharper disable UnusedParameter.Global
 
 namespace ModeratorTools.Commands.Toggles;
 
 public abstract class ToggleContainerBase : ContainerCommand
 {
 
-    protected string FeatureName { get; }
+    public string FeatureName { get; }
+
+    protected abstract bool this[PlayerData data] { get; set; }
 
     protected ToggleContainerBase()
     {
@@ -14,27 +18,71 @@ public abstract class ToggleContainerBase : ContainerCommand
         FeatureName = type.GetCustomAttribute<ToggleFeatureAttribute>()?.Name ?? throw new MissingFeatureNameException(type);
     }
 
-    protected abstract ToggleCommandInfo Info { get; }
-
-    // TODO: method-based subcommands
-
-    public CommandResult? CompileResultCustom(List<CommandResultOnTarget> success, List<CommandResultOnTarget> failures) => (success.Count, failures.Count) switch
+    [MethodBasedSubcommand]
+    [ToggleDescription("Lists all players with {0} enabled")]
+    public CommandResult List(ArraySegment<string> arguments, CommandSender sender)
     {
-        (0, 0) => "!No players were affected.",
-        (1, 0) => Enabled(success[0]),
-        (0, 1) => Disabled(failures[0]),
-        (1, 1) => $"{Enabled(success[0])}\n{Disabled(success[0])}",
-        (_, 0) => Enabled(success),
-        (0, _) => Disabled(failures),
-        _ => $"{Enabled(success)}\n{Disabled(failures)}"
-    };
+        var nicknames = new List<string>();
+        foreach (var (player, data) in PlayerDataManager.Defined)
+            if (this[data])
+                nicknames.Add(player.Nickname);
+        return nicknames.Count == 0
+            ? $"!Nobody has {FeatureName} enabled."
+            : $"The following players have {FeatureName} enabled:\n{string.Join(", ", nicknames)}";
+    }
 
-    private string Enabled(CommandResultOnTarget result) => $"Enabled {Info.Name} for {result.Nick}.";
+    [MethodBasedSubcommand]
+    [ToggleDescription("Toggles {0} for the specified players")]
+    public CommandResult Toggle(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+    {
+        var enabled = new List<string>();
+        var disabled = new List<string>();
+        foreach (var hub in targets)
+        {
+            var nick = hub.nicknameSync.MyNick;
+            var data = hub.GetData();
+            var state = this[data] = !this[data];
+            if (state)
+                enabled.Add(nick);
+            else
+                disabled.Add(nick);
+        }
 
-    private string Disabled(CommandResultOnTarget result) => $"Disabled {Info.Name} for {result.Nick}.";
+        return this.ToggledResults(enabled, disabled);
+    }
 
-    private string Enabled(List<CommandResultOnTarget> success) => $"Enabled {Info.Name} for the following players: {success.CombineNicknames()}";
+    [MethodBasedSubcommand]
+    [ToggleDescription("Disables {0} for all players")]
+    public CommandResult Clear(ArraySegment<string> arguments, CommandSender sender)
+    {
+        foreach (var (_, data) in PlayerDataManager.Defined)
+            this[data] = false;
+        return $"Disabled {FeatureName} for everyone.";
+    }
 
-    private string Disabled(List<CommandResultOnTarget> failures) => $"Disabled {Info.Name} for the following players: {failures.CombineNicknames()}";
+    [MethodBasedSubcommand]
+    [ToggleDescription("Enables {0} for the specified players")]
+    public CommandResult Enable(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+        => this.ChangedResults(SetState(targets, true), ToggleCommandExtensions.Enabled, ToggleCommandExtensions.Enabled);
+
+    [MethodBasedSubcommand]
+    [ToggleDescription("Disables {0} for the specified players")]
+    public CommandResult Disable(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+        => this.ChangedResults(SetState(targets, false), ToggleCommandExtensions.Disabled, ToggleCommandExtensions.Disabled);
+
+    private List<string> SetState(List<ReferenceHub> targets, bool enabled)
+    {
+        var affected = new List<string>();
+        foreach (var hub in targets)
+        {
+            var data = hub.GetData();
+            if (this[data] == enabled)
+                continue;
+            this[data] = enabled;
+            affected.Add(hub.nicknameSync.MyNick);
+        }
+
+        return affected;
+    }
 
 }
