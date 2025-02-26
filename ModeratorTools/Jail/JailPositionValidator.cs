@@ -14,6 +14,8 @@ public static class JailPositionValidator
 
     private static readonly FacilityZone[] ValidExitZones = [FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance, FacilityZone.Surface];
 
+    public static readonly Vector3 SurfaceUp = Vector3.up * 1001;
+
     private static Vector3 RandomPosition(FacilityZone zone) => Scp106PocketExitFinder.GetPosesForZone(zone).RandomItem().position + Vector3.up;
 
     public static void ValidateEntry(ReferenceHub hub, PlayerInfoBase info)
@@ -65,7 +67,7 @@ public static class JailPositionValidator
             return $"!Invalid index. There are only {"extra position".PluralizeWithCount(config.ExtraPositions.Count)}.";
         }
 
-        position = (Vector3) config.ExtraPositions[index] + Vector3.up;
+        position = (Vector3) config.ExtraPositions[index] + SurfaceUp;
         return true;
     }
 

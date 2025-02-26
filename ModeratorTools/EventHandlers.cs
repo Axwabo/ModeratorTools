@@ -4,6 +4,7 @@ using LabApi.Features.Wrappers;
 using ModeratorTools.Commands.Muting;
 using ModeratorTools.Commands.Toggles;
 using ModeratorTools.Jail;
+using PlayerStatsSystem;
 
 namespace ModeratorTools;
 
@@ -25,6 +26,14 @@ internal sealed class EventHandlers : CustomEventsHandler
             && ev.Player.GetData().PryGates
             && gate.Base.TryPryGate(ev.Player.ReferenceHub))
             ev.IsAllowed = false;
+    }
+
+    public override void OnPlayerHurting(PlayerHurtingEventArgs ev)
+    {
+        if (ev.DamageHandler is AttackerDamageHandler {Attacker.Hub: var attacker} adh
+            && attacker != null
+            && attacker.GetData().InstantKill)
+            adh.Damage = -1;
     }
 
 }
