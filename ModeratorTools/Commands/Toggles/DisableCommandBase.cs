@@ -1,6 +1,6 @@
 namespace ModeratorTools.Commands.Toggles;
 
-internal abstract class DisableCommandBase : SeparatedTargetingCommand
+public abstract class DisableCommandBase : SeparatedTargetingCommand
 {
 
     protected abstract ToggleCommandInfo Info { get; }
