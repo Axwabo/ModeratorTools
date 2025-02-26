@@ -12,6 +12,7 @@ namespace ModeratorTools.Jail;
 [StaticOptionText("Previously Jailed", "#ff00ee")]
 [OptionIcon("🔒", OverallColor = "#ff00ee", ShouldBlink = false)]
 [VisibleByDefault]
+[JailRegistrationFilter]
 public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionVisibilityController
 {
 

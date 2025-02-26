@@ -8,6 +8,7 @@ namespace ModeratorTools.Commands.Jail;
 [ModeratorPermissions("jail.jail", PlayerPermissions.PlayersManagement)]
 [Usage("[index]")]
 [ShouldAffectSpectators]
+[JailRegistrationFilter]
 public class JailCommand : SeparatedTargetingCommand, ITargetingPreExecutionFilter
 {
 
