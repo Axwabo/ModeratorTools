@@ -2,7 +2,7 @@
 
 namespace ModeratorTools.Commands.Muting;
 
-[CommandProperties(CommandHandlerType.RemoteAdmin, "pMute", "Temporarily mutes everyone or the lobby")] // TODO: target-based
+[CommandProperties(CommandHandlerType.RemoteAdmin, "pMute", "Temporary muting")] // TODO: target-based
 [ModeratorPermissions("mute", PlayerPermissions.PlayersManagement)]
-[UsesSubcommands(typeof(MuteRoundStart))]
+[UsesSubcommands(typeof(MuteRoundStart), typeof(MuteAll))]
 public sealed class MuteCommand : ContainerCommand;
