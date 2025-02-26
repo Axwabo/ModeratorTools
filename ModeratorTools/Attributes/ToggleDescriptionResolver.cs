@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
 using Axwabo.CommandSystem.PropertyManager;
 using Axwabo.CommandSystem.PropertyManager.Resolvers;
-using ModeratorTools.Commands.Toggles;
 
-namespace ModeratorTools;
+namespace ModeratorTools.Attributes;
 
 [AttributeUsage(AttributeTargets.Class)]
 internal sealed class ToggleDescriptionResolver : Attribute, ICommandDescriptionResolver<ToggleDescriptionAttribute>

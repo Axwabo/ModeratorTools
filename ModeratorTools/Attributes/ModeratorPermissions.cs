@@ -1,4 +1,4 @@
-﻿namespace ModeratorTools;
+﻿namespace ModeratorTools.Attributes;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 internal sealed class ModeratorPermissions : Attribute

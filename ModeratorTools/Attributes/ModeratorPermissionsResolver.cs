@@ -1,6 +1,6 @@
 ﻿using Axwabo.CommandSystem.PropertyManager.Resolvers;
 
-namespace ModeratorTools;
+namespace ModeratorTools.Attributes;
 
 [AttributeUsage(AttributeTargets.Class)]
 internal sealed class ModeratorPermissionsResolver : Attribute, IAttributeBasedPermissionResolver<ModeratorPermissions>

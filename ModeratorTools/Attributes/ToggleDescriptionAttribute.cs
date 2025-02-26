@@ -1,4 +1,4 @@
-﻿namespace ModeratorTools.Commands.Toggles;
+﻿namespace ModeratorTools.Attributes;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public sealed class ToggleDescriptionAttribute : Attribute
