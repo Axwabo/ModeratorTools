@@ -7,4 +7,6 @@ public sealed class PlayerData
 
     public bool InstantKill { get; set; }
 
+    public bool Scp096Immunity { get; set; }
+
 }

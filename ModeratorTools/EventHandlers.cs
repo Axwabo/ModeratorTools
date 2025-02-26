@@ -1,9 +1,11 @@
 ﻿using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Arguments.Scp096Events;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features.Wrappers;
 using ModeratorTools.Commands.Muting;
 using ModeratorTools.Commands.Toggles;
 using ModeratorTools.Jail;
+using PlayerRoles;
 using PlayerStatsSystem;
 
 namespace ModeratorTools;
@@ -34,6 +36,13 @@ internal sealed class EventHandlers : CustomEventsHandler
             && attacker != null
             && attacker.GetData().InstantKill)
             adh.Damage = -1;
+    }
+
+    public override void OnScp096AddingTarget(Scp096AddingTargetEventArgs ev)
+    {
+        var p = ev.Target;
+        if (ModeratorToolsPlugin.Cfg.TutorialsImmuneToScp096 && p.Role == RoleTypeId.Tutorial || p.GetData().Scp096Immunity)
+            ev.IsAllowed = false;
     }
 
 }
