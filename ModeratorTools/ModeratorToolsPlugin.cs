@@ -5,6 +5,7 @@ using LabApi.Loader.Features.Plugins;
 namespace ModeratorTools;
 
 [ModeratorPermissionsResolver]
+[ToggleDescriptionResolver]
 public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
 {
 
