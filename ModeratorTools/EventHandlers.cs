@@ -20,7 +20,10 @@ internal sealed class EventHandlers : CustomEventsHandler
 
     public override void OnPlayerInteractingDoor(PlayerInteractingDoorEventArgs ev)
     {
-        if (ev.Door is Gate gate && ev.Player.GetData().PryGates && gate.Base.TryPryGate(ev.Player.ReferenceHub))
+        if ((!ev.Door.IsLocked || ev.Player.IsBypassEnabled)
+            && ev.Door is Gate gate
+            && ev.Player.GetData().PryGates
+            && gate.Base.TryPryGate(ev.Player.ReferenceHub))
             ev.IsAllowed = false;
     }
 
