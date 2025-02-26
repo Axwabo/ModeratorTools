@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using LabApi.Features.Wrappers;
 
 namespace ModeratorTools.Commands.Toggles;
 

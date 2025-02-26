@@ -1,5 +1,4 @@
-﻿using Axwabo.Helpers;
-using ModeratorTools.Jail;
+﻿using ModeratorTools.Jail;
 using PlayerRoles.FirstPersonControl;
 
 namespace ModeratorTools.Commands.Jail;

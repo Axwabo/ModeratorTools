@@ -1,6 +1,4 @@
-﻿using LabApi.Features.Wrappers;
-
-namespace ModeratorTools.Commands.Muting;
+﻿namespace ModeratorTools.Commands.Muting;
 
 public static class MuteHandler
 {

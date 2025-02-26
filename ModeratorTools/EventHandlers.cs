@@ -1,7 +1,6 @@
 ﻿using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.Scp096Events;
 using LabApi.Events.CustomHandlers;
-using LabApi.Features.Wrappers;
 using ModeratorTools.Commands.Muting;
 using ModeratorTools.Commands.Toggles;
 using ModeratorTools.Jail;

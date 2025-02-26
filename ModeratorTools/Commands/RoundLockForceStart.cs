@@ -1,5 +1,4 @@
-﻿using LabApi.Features.Wrappers;
-using LightContainmentZoneDecontamination;
+﻿using LightContainmentZoneDecontamination;
 
 namespace ModeratorTools.Commands;
 

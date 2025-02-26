@@ -2,7 +2,6 @@
 using Axwabo.Helpers.PlayerInfo;
 using Axwabo.Helpers.PlayerInfo.Effect;
 using CustomPlayerEffects;
-using LabApi.Features.Wrappers;
 using LightContainmentZoneDecontamination;
 using MapGeneration;
 using PlayerRoles.PlayableScps.Scp106;

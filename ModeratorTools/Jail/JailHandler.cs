@@ -1,5 +1,4 @@
 using Axwabo.Helpers.PlayerInfo;
-using LabApi.Features.Wrappers;
 using PlayerRoles;
 
 namespace ModeratorTools.Jail;
