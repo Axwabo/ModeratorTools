@@ -23,11 +23,17 @@ internal sealed class EventHandlers : CustomEventsHandler
 
     public override void OnPlayerInteractingDoor(PlayerInteractingDoorEventArgs ev)
     {
-        if ((!ev.Door.IsLocked || ev.Player.IsBypassEnabled)
-            && ev.Door is Gate gate
-            && ev.Player.GetData().PryGates
-            && gate.Base.TryPryGate(ev.Player.ReferenceHub))
-            ev.IsAllowed = false;
+        var p = ev.Player;
+        if (ev.Door.IsLocked && !p.IsBypassEnabled)
+            return;
+        var data = p.GetData();
+        switch (ev.Door)
+        {
+            case Gate gate when data.PryGates && gate.TryPry(p):
+            case BreakableDoor breakableDoor when data.BreakDoors && breakableDoor.TryBreak():
+                ev.IsAllowed = false;
+                break;
+        }
     }
 
     public override void OnPlayerHurting(PlayerHurtingEventArgs ev)

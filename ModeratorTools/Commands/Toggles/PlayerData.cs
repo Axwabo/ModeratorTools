@@ -11,4 +11,6 @@ public sealed class PlayerData
 
     public bool Scp173Immunity { get; set; }
 
+    public bool BreakDoors { get; set; }
+
 }
