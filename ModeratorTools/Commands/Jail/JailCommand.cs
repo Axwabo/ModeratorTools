@@ -7,6 +7,7 @@ namespace ModeratorTools.Commands.Jail;
 [ModeratorPermissions("jail.jail", PlayerPermissions.PlayersManagement)]
 [Usage("[index]")]
 [ShouldAffectSpectators]
+[NoPlayersAffectedMessage("No players were affected. Did you mean to use unjail or unjailWithMe?")]
 [JailRegistrationFilter]
 public class JailCommand : FilteredTargetingCommand
 {
