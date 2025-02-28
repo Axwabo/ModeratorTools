@@ -6,14 +6,14 @@ namespace ModeratorTools.Commands;
 [CommandProperties(CommandHandlerType.RemoteAdmin, "randomTeleport", "Teleports the selected players to a random room on the map or in the specified zones")]
 [ModeratorPermissions("randomTeleport", PlayerPermissions.PlayersManagement)]
 [Usage("[...zones]")]
-public sealed class RandomTeleport : SeparatedTargetingCommand, ITargetingPreExecutionFilter
+public sealed class RandomTeleport : FilteredTargetingCommand
 {
 
     private static readonly ValueRange<FacilityZone> ValidZones = ValueRange<FacilityZone>.Create(FacilityZone.LightContainment, FacilityZone.Surface);
 
     private List<Room> _targetRooms;
 
-    public CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+    public override CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
     {
         if (arguments.Count == 0)
         {

@@ -10,7 +10,7 @@ namespace ModeratorTools.Commands;
 [ModeratorPermissions("ragdoll", PlayerPermissions.ForceclassWithoutRestrictions)]
 [Usage("<roleType> [countPerPlayer]")]
 [ShouldAffectSpectators(false)]
-public sealed class Ragdoll : SeparatedTargetingCommand, ITargetingPreExecutionFilter
+public sealed class Ragdoll : FilteredTargetingCommand
 {
 
     private static readonly UniversalDamageHandler DamageHandler = new(0, DeathTranslations.Unknown);
@@ -21,7 +21,7 @@ public sealed class Ragdoll : SeparatedTargetingCommand, ITargetingPreExecutionF
 
     private int _count;
 
-    public CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+    public override CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
     {
         if (!arguments.ParseRole(out _role) || !PlayerRoleLoader.TryGetRoleTemplate(_role, out _template))
             return "!Invalid role.";

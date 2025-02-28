@@ -8,7 +8,7 @@ namespace ModeratorTools.Commands;
 [ModeratorPermissions("dropItem", PlayerPermissions.GivingItems)]
 [Usage("<item> [countPerPlayer]")]
 [ShouldAffectSpectators(false)]
-public sealed class DropItem : SeparatedTargetingCommand, ITargetingPreExecutionFilter
+public sealed class DropItem : FilteredTargetingCommand
 {
 
     private const int MaxTotal = 200;
@@ -17,7 +17,7 @@ public sealed class DropItem : SeparatedTargetingCommand, ITargetingPreExecution
 
     private int _countPerPlayer;
 
-    public CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+    public override CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
     {
         if (!arguments.ParseItem(out var type) || !InventoryItemLoader.AvailableItems.TryGetValue(type, out _item))
             return "!Invalid item type.";

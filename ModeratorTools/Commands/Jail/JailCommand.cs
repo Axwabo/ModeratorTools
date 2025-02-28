@@ -8,12 +8,12 @@ namespace ModeratorTools.Commands.Jail;
 [Usage("[index]")]
 [ShouldAffectSpectators]
 [JailRegistrationFilter]
-public class JailCommand : SeparatedTargetingCommand, ITargetingPreExecutionFilter
+public class JailCommand : FilteredTargetingCommand
 {
 
     protected Vector3? TargetPosition;
 
-    public virtual CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+    public override CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
     {
         TargetPosition = null;
         if (arguments.Count == 0)

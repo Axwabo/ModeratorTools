@@ -7,14 +7,14 @@ namespace ModeratorTools.Commands;
 [ModeratorPermissions("dropSize", PlayerPermissions.GivingItems)]
 [Usage("<item> <scalar>", "<item> <x> <y> <z>")]
 [ShouldAffectSpectators(false)]
-public sealed class DropSize : SeparatedTargetingCommand, ITargetingPreExecutionFilter
+public sealed class DropSize : FilteredTargetingCommand
 {
 
     private ItemBase _item;
 
     private Vector3 _scale;
 
-    public CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+    public override CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
     {
         if (!arguments.ParseItem(out var type) || !InventoryItemLoader.AvailableItems.TryGetValue(type, out _item))
             return "!Invalid item type.";

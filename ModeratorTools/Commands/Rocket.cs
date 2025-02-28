@@ -10,7 +10,7 @@ namespace ModeratorTools.Commands;
 [ModeratorPermissions("rocket", PlayerPermissions.ForceclassWithoutRestrictions)]
 [ShouldAffectSpectators(false)]
 [Usage("<speed>")]
-public sealed class Rocket : SeparatedTargetingCommand, ITargetingPreExecutionFilter, ICustomResultCompiler
+public sealed class Rocket : FilteredTargetingCommand, ICustomResultCompiler
 {
 
     private const string BeenRocketed = "been rocketed into the sky (we're going on a trip, in our favorite rocketship)";
@@ -21,7 +21,7 @@ public sealed class Rocket : SeparatedTargetingCommand, ITargetingPreExecutionFi
 
     private float _speed;
 
-    public CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+    public override CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
         => arguments.ParseFloat(SpeedRange, out _speed)
             ? CommandResult.Null
             : "!Invalid speed! Must be at least 0.1";

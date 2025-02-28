@@ -7,12 +7,12 @@ namespace ModeratorTools.Commands;
 [ModeratorPermissions("teleportX", PlayerPermissions.PlayersManagement)]
 [Usage("<target>")]
 [ShouldAffectSpectators(false)]
-public sealed class TeleportX : SeparatedTargetingCommand, ITargetingPreExecutionFilter
+public sealed class TeleportX : FilteredTargetingCommand
 {
 
     private Vector3 _position;
 
-    public CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+    public override CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
     {
         foreach (var hub in arguments.GetTargets(out _))
             if (hub.TryGetPosition(out _position))

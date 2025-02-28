@@ -4,12 +4,12 @@ namespace ModeratorTools.Commands;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "scale", 1, "Set the size of the specified players", "size")]
 [Usage("reset", "<scalar>", "<x> <y> <z>")]
-public sealed class Scale : SeparatedTargetingCommand, ITargetingPreExecutionFilter
+public sealed class Scale : FilteredTargetingCommand
 {
 
     private Vector3 _scale;
 
-    public CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
+    public override CommandResult? OnBeforeExecuted(List<ReferenceHub> targets, ArraySegment<string> arguments, CommandSender sender)
     {
         if (arguments.At(0).Equals("reset", StringComparison.OrdinalIgnoreCase))
         {
