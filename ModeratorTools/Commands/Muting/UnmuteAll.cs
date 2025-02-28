@@ -1,15 +1,10 @@
 namespace ModeratorTools.Commands.Muting;
 
 [CommandProperties("all", "Unmutes every non-staff", "*")]
-public sealed class UnmuteAll : CommandBase
+public sealed class UnmuteAll : GlobalMuteCommandBase
 {
 
-    protected override CommandResult Execute(ArraySegment<string> arguments, CommandSender sender)
-    {
-        foreach (var player in Player.List)
-            if (player.IsMuteApplicable())
-                player.Unmute(false);
-        return "All non-staff have been unmuted.";
-    }
+    protected override string Response => "All non-staff have been unmuted.";
+    protected override void Execute(Player player) => player.Unmute(false);
 
 }

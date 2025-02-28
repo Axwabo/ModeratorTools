@@ -1,15 +1,10 @@
 namespace ModeratorTools.Commands.Muting;
 
 [CommandProperties("all", "Temporarily mutes every non-staff", "*")]
-public sealed class MuteAll : CommandBase
+public sealed class MuteAll : GlobalMuteCommandBase
 {
 
-    protected override CommandResult Execute(ArraySegment<string> arguments, CommandSender sender)
-    {
-        foreach (var player in Player.List)
-            if (player.IsMuteApplicable())
-                player.Mute();
-        return "All non-staff have been muted.";
-    }
+    protected override string Response => "All non-staff have been muted.";
+    protected override void Execute(Player player) => player.Mute();
 
 }
