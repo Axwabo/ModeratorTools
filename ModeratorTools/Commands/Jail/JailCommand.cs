@@ -23,7 +23,7 @@ public class JailCommand : FilteredTargetingCommand
             return "!Invalid index.";
         if (index == 0)
             return CommandResult.Null;
-        var result = JailPositionValidator.TryGetCustomJailPosition(index - 1, out var position);
+        var result = JailConfigUtils.TryGetCustomJailPosition(index - 1, out var position);
         if (!result)
             return result;
         TargetPosition = position;

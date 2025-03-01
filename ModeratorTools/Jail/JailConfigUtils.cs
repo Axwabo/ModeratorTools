@@ -8,7 +8,7 @@ using PlayerRoles.PlayableScps.Scp106;
 
 namespace ModeratorTools.Jail;
 
-public static class JailPositionValidator
+public static class JailConfigUtils
 {
 
     private static readonly FacilityZone[] ValidExitZones = [FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance, FacilityZone.Surface];
@@ -69,6 +69,8 @@ public static class JailPositionValidator
         position = (Vector3) config.ExtraPositions[index] + SurfaceUp;
         return true;
     }
+
+    public static bool GodMode => TryGetConfig(out var config) && config.GodMode;
 
     private static bool TryGetConfig(out JailConfig config)
     {

@@ -1,4 +1,5 @@
 using Axwabo.Helpers.PlayerInfo;
+using ModeratorTools.Commands.Toggles;
 using PlayerRoles;
 
 namespace ModeratorTools.Jail;
@@ -28,10 +29,13 @@ public static class JailHandler
         if (sender != null && hub.queryProcessor._sender != sender)
             PreviouslyJailedGUI.AddPlayer(sender, hub);
         var info = hub.GetInfoWithRole();
-        JailPositionValidator.ValidateEntry(hub, info.Info);
+        JailConfigUtils.ValidateEntry(hub, info.Info);
         Entries[id] = new JailEntry(info);
+        var ccm = hub.characterClassManager;
         hub.inventory.ClearEverything();
         hub.roleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin);
+        hub.GetData().GodModeBeforeJail = ccm.GodMode;
+        ccm.GodMode = JailConfigUtils.GodMode;
         return true;
     }
 
@@ -44,12 +48,16 @@ public static class JailHandler
         if (!entry.ThisRound)
         {
             hub.roleManager.ServerSetRole(RoleTypeId.Spectator, RoleChangeReason.RemoteAdmin);
+            hub.ApplyPreviousGodMode();
             return true;
         }
 
-        JailPositionValidator.ValidateExit(entry.Info.Info);
+        JailConfigUtils.ValidateExit(entry.Info.Info);
         entry.Info.SetClassAndApplyInfo(Player.Get(hub));
+        hub.ApplyPreviousGodMode();
         return true;
     }
+
+    private static void ApplyPreviousGodMode(this ReferenceHub hub) => hub.characterClassManager.GodMode = hub.GetData().GodModeBeforeJail;
 
 }

@@ -8,7 +8,7 @@ public sealed class JailConfig
 {
 
     [Description("If false, jail commands and the RA option won't be registered.")]
-    public bool Enabled { get; set; }
+    public bool Enabled { get; set; } = true;
 
     [Description("If enabled, players jailed in the facility will be teleported to the surface when they're unjailed following the warhead detonation.")]
     public bool WarheadTeleport { get; set; } = true;
@@ -18,6 +18,9 @@ public sealed class JailConfig
 
     [Description("If enabled, players jailed in the pocket dimension will have the entry position set to the room they were captured in. If no zone was found, a random room will be picked.")]
     public bool PocketFix { get; set; } = true;
+
+    [Description("Whether jailed players should be in god mode.")]
+    public bool GodMode { get; set; }
 
     [Description("Extra jail positions relative to Surface (0; 1000; 0)")]
     public List<SerializedRotation> ExtraPositions { get; set; } =
