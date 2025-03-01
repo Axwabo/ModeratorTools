@@ -2,7 +2,7 @@
 
 namespace ModeratorTools.Commands;
 
-[CommandProperties(CommandHandlerType.RemoteAdmin, "scale", 1, "Set the size of the specified players", "size")]
+// [CommandProperties(CommandHandlerType.RemoteAdmin, "scale", 1, "Set the size of the specified players", "size")]
 [Usage("reset", "<scalar>", "<x> <y> <z>")]
 public sealed class Scale : FilteredTargetingCommand
 {
@@ -45,7 +45,7 @@ public sealed class Scale : FilteredTargetingCommand
         transform.localScale = _scale;
         var identity = target.networkIdentity;
         foreach (var p in Player.List)
-            NetworkServer.SendSpawnMessage(identity, p.Connection);
+            NetworkServer.SendSpawnMessage(identity, p.Connection); // TODO: wait for an official player scaling method
         return true;
     }
 

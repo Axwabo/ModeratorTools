@@ -1,6 +1,6 @@
 ﻿namespace ModeratorTools.Commands.Muting;
 
-public abstract class GlobalMuteCommandBase : CommandBase
+public abstract class MutePlayersCommandBase : CommandBase
 {
 
     protected override CommandResult Execute(ArraySegment<string> arguments, CommandSender sender)

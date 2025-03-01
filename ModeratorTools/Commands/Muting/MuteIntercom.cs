@@ -1,7 +1,7 @@
 namespace ModeratorTools.Commands.Muting;
 
 [CommandProperties("intercom", "Temporarily intercom-mutes every non-staff", "icom")]
-public sealed class MuteIntercom : GlobalMuteCommandBase
+public sealed class MuteIntercom : MutePlayersCommandBase
 {
 
     protected override string Response => "All non-staff have been intercom-muted.";
