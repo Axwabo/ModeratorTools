@@ -1,8 +1,9 @@
 ﻿namespace ModeratorTools.Commands.Toggles;
 
-[CommandProperties(CommandHandlerType.RemoteAdmin, "scp096Immunity", "Manage SCP-096 immunity", "096immunity")]
+[CommandProperties(CommandHandlerType.RemoteAdmin, "scp096Immunity")]
+[Aliases("096immunity")]
 [ModeratorPermissions("scp096Immunity", PlayerPermissions.PlayersManagement)]
-[ToggleFeature("SCP-096 immunity")]
+[TogglesFeature("SCP-096 immunity")]
 public sealed class Scp096ImmunityCommand : ToggleContainerBase
 {
 

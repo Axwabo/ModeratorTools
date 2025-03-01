@@ -1,11 +1,11 @@
 ﻿namespace ModeratorTools.Attributes;
 
 [AttributeUsage(AttributeTargets.Class)]
-public sealed class ToggleFeatureAttribute : Attribute
+public sealed class TogglesFeatureAttribute : Attribute
 {
 
     public string Name { get; }
 
-    public ToggleFeatureAttribute(string name) => Name = name;
+    public TogglesFeatureAttribute(string name) => Name = name;
 
 }

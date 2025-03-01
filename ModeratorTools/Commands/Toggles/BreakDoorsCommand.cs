@@ -2,7 +2,7 @@ namespace ModeratorTools.Commands.Toggles;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "breakDoors", "Manage door breaking")]
 [ModeratorPermissions("breakDoors", PlayerPermissions.FacilityManagement)]
-[ToggleFeature("door breaking")]
+[TogglesFeature("door breaking")]
 public sealed class BreakDoorsCommand : ToggleContainerBase
 {
 

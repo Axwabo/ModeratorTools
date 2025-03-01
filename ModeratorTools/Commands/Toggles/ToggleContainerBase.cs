@@ -5,6 +5,7 @@ using Axwabo.CommandSystem.Attributes.Containers;
 
 namespace ModeratorTools.Commands.Toggles;
 
+[ToggleDescription("Manages {0}")]
 public abstract class ToggleContainerBase : ContainerCommand
 {
 
@@ -15,7 +16,7 @@ public abstract class ToggleContainerBase : ContainerCommand
     protected ToggleContainerBase()
     {
         var type = GetType();
-        FeatureName = type.GetCustomAttribute<ToggleFeatureAttribute>()?.Name ?? throw new MissingFeatureNameException(type);
+        FeatureName = type.GetCustomAttribute<TogglesFeatureAttribute>()?.Name ?? throw new MissingFeatureNameException(type);
     }
 
     [MethodBasedSubcommand]

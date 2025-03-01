@@ -10,7 +10,7 @@ internal sealed class ToggleDescriptionResolver : Attribute, ICommandDescription
 
     public string ResolveDescription(ToggleDescriptionAttribute attribute)
     {
-        var name = BaseCommandPropertyManager.CurrentProcessor?.RegisteringCommandType?.GetCustomAttribute<ToggleFeatureAttribute>()?.Name;
+        var name = BaseCommandPropertyManager.CurrentProcessor?.RegisteringCommandType?.GetCustomAttribute<TogglesFeatureAttribute>()?.Name;
         return string.Format(attribute.Format, name ?? "this feature");
     }
 

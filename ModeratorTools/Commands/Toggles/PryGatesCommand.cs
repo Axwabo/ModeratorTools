@@ -1,8 +1,8 @@
 ﻿namespace ModeratorTools.Commands.Toggles;
 
-[CommandProperties(CommandHandlerType.RemoteAdmin, "pryGates", "Manage gate prying")]
+[CommandProperties(CommandHandlerType.RemoteAdmin, "pryGates")]
 [ModeratorPermissions("pryGates", PlayerPermissions.FacilityManagement)]
-[ToggleFeature("gate prying")]
+[TogglesFeature("gate prying")]
 public sealed class PryGatesCommand : ToggleContainerBase
 {
 

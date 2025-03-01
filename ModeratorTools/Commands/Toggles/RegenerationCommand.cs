@@ -5,9 +5,10 @@ using MEC;
 
 namespace ModeratorTools.Commands.Toggles;
 
-[CommandProperties(CommandHandlerType.RemoteAdmin, "regeneration", "Manages periodic health regeneration", "regen")]
-[ToggleFeature("periodic health regeneration")]
+[CommandProperties(CommandHandlerType.RemoteAdmin, "regeneration")]
+[Aliases("regen")]
 [ModeratorPermissions("regeneration", PlayerPermissions.Effects)]
+[TogglesFeature("periodic health regeneration")]
 public sealed class RegenerationCommand : ToggleContainerBase
 {
 

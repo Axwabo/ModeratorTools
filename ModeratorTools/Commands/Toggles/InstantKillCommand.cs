@@ -1,8 +1,8 @@
 namespace ModeratorTools.Commands.Toggles;
 
-[CommandProperties(CommandHandlerType.RemoteAdmin, "instaKill", "Manage instant killing")]
+[CommandProperties(CommandHandlerType.RemoteAdmin, "instaKill")]
 [ModeratorPermissions("instaKill", PlayerPermissions.ForceclassWithoutRestrictions)]
-[ToggleFeature("instant killing")]
+[TogglesFeature("instant killing")]
 public sealed class InstantKillCommand : ToggleContainerBase
 {
 
