@@ -1,7 +1,7 @@
 ﻿using MapGeneration;
 using PlayerRoles.FirstPersonControl;
 
-namespace ModeratorTools.Commands;
+namespace ModeratorTools.Commands.RoomTeleports;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "randomTeleport", "Teleports the selected players to a random room on the map or in the specified zones")]
 [ModeratorPermissions("randomTeleport", PlayerPermissions.PlayersManagement)]
@@ -34,6 +34,6 @@ public sealed class RandomTeleport : FilteredTargetingCommand
     }
 
     protected override CommandResult ExecuteOn(ReferenceHub target, ArraySegment<string> arguments, CommandSender sender)
-        => target.TryOverridePosition(_targetRooms.RandomItem().Position + Vector3.up);
+        => target.TryOverridePosition(_targetRooms.RandomItem().GetTeleportPosition());
 
 }

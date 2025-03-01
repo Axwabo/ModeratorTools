@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Axwabo.Helpers.Config;
 using ModeratorTools.Jail;
 
 namespace ModeratorTools;
@@ -15,6 +16,19 @@ public sealed class ModeratorToolsConfig
 
     [Description("If enabled, tutorial roles will not count as observers of SCP-173.")]
     public bool TutorialsImmuneToScp173 { get; set; }
+
+    [Description("Position offset to teleport to in rooms which have a fatal/unreachable origin point.")]
+    public List<MapPointByRoomType> RoomTeleportOffsets { get; set; } =
+    [
+        new(RoomType.EzCollapsedTunnel, 0, 0, 5),
+        new(RoomType.HczAcroamaticAbatement, 2.5f, 0, 2.5f),
+        new(RoomType.HczArmory, -2),
+        new(RoomType.HczTesla, 4),
+        new(RoomType.Lcz173, -5),
+        new(RoomType.Lcz330, -5),
+        new(RoomType.LczArmory, -4.5f),
+        new(RoomType.LczCurve, 1, 0, -1)
+    ];
 
     public JailConfig Jail { get; set; } = new();
 
