@@ -1,6 +1,6 @@
 ﻿using PlayerRoles.FirstPersonControl;
 
-namespace ModeratorTools;
+namespace ModeratorTools.Commands;
 
 public static class ReferenceHubExtensions
 {

@@ -18,23 +18,13 @@ public sealed class DropSize : FilteredTargetingCommand
     {
         if (!arguments.ParseItem(out var type) || !InventoryItemLoader.AvailableItems.TryGetValue(type, out _item))
             return "!Invalid item type.";
-        if (arguments.Count == 2)
-        {
-            if (!arguments.ParseFloat(out var scalar, 1))
-                return "!Invalid scalar.";
-            _scale = Vector3.one * scalar;
-            return CommandResult.Null;
-        }
-
-        if (arguments.Count < 5)
-            return CommandResult.Failed(CombinedUsage);
-        if (!arguments.ParseFloat(out var x, 1))
-            return "!Invalid X value.";
-        if (!arguments.ParseFloat(out var y, 2))
-            return "!Invalid Y value.";
-        if (!arguments.ParseFloat(out var z, 3))
-            return "!Invalid Z value.";
-        _scale = new Vector3(x, y, z);
+        if (arguments.Count != 2)
+            return arguments.Count < 5
+                ? CommandResult.Failed(CombinedUsage)
+                : arguments.ParseVector(out _scale, 1);
+        if (!arguments.ParseFloat(out var scalar, 1))
+            return "!Invalid scalar.";
+        _scale = Vector3.one * scalar;
         return CommandResult.Null;
     }
 

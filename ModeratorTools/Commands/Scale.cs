@@ -17,23 +17,13 @@ public sealed class Scale : FilteredTargetingCommand
             return CommandResult.Null;
         }
 
-        if (arguments.Count == 1)
-        {
-            if (!arguments.ParseFloat(out var scalar))
-                return "!Invalid scalar value.";
-            _scale = Vector3.one * scalar;
-            return CommandResult.Null;
-        }
-
-        if (arguments.Count < 3)
-            return CommandResult.Failed(CombinedUsage);
-        if (!arguments.ParseFloat(out var x))
-            return "!Invalid X value.";
-        if (!arguments.ParseFloat(out var y, 1))
-            return "!Invalid Y value.";
-        if (!arguments.ParseFloat(out var z, 2))
-            return "!Invalid Z value.";
-        _scale = new Vector3(x, y, z);
+        if (arguments.Count != 1)
+            return arguments.Count < 3
+                ? CommandResult.Failed(CombinedUsage)
+                : arguments.ParseVector(out _scale);
+        if (!arguments.ParseFloat(out var scalar))
+            return "!Invalid scalar value.";
+        _scale = Vector3.one * scalar;
         return CommandResult.Null;
     }
 
