@@ -19,7 +19,7 @@ public sealed class StaffTags : CommandBase
         foreach (var player in Player.List)
         {
             var group = player.UserGroup;
-            if (!player.RemoteAdminAccess || group == null)
+            if (!player.RemoteAdminAccess || player.ReferenceHub.authManager.RemoteAdminGlobalAccess || group == null)
                 continue;
             if (!value.Value)
             {
