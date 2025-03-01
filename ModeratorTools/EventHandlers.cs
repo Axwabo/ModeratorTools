@@ -69,9 +69,13 @@ internal sealed class EventHandlers : CustomEventsHandler
         var ccm = hub.characterClassManager;
         var data = hub.GetData();
         if (wasTutorial)
+        {
             ccm.GodMode = data.WasInGodMode;
-        else
-            data.WasInGodMode = ccm.GodMode;
+            return;
+        }
+
+        data.WasInGodMode = ccm.GodMode;
+        ccm.GodMode = true;
     }
 
 }

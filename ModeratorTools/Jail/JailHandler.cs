@@ -33,8 +33,8 @@ public static class JailHandler
         Entries[id] = new JailEntry(info);
         var ccm = hub.characterClassManager;
         hub.inventory.ClearEverything();
-        hub.roleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin);
         hub.GetData().GodModeBeforeJail = ccm.GodMode;
+        hub.roleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin);
         ccm.GodMode = JailConfigUtils.GodMode;
         return true;
     }
