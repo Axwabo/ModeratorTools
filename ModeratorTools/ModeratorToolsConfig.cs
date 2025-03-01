@@ -20,6 +20,8 @@ public sealed class ModeratorToolsConfig
     [Description("If enabled, tutorial roles will be in god mode.")]
     public bool GodModeTutorials { get; set; }
 
+    public JailConfig Jail { get; set; } = new();
+
     [Description("Position offset to teleport to in rooms which have a fatal/unreachable origin point.")]
     public List<MapPointByRoomType> RoomTeleportOffsets { get; set; } =
     [
@@ -27,12 +29,11 @@ public sealed class ModeratorToolsConfig
         new(RoomType.HczAcroamaticAbatement, 2.5f, 0, 2.5f),
         new(RoomType.HczArmory, -2),
         new(RoomType.HczTesla, 4),
+        new(RoomType.HczTestroom, 0, 0, 5.5f),
         new(RoomType.Lcz173, -5),
         new(RoomType.Lcz330, -5),
         new(RoomType.LczArmory, -4.5f),
         new(RoomType.LczCurve, 1, 0, -1)
     ];
-
-    public JailConfig Jail { get; set; } = new();
 
 }
