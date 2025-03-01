@@ -50,11 +50,13 @@ public sealed class RegenerationCommand : ToggleContainerBase
     public CommandResult Time(ArraySegment<string> arguments, CommandSender sender)
     {
         if (arguments.Count == 0)
-            return $"Current regeneration interval is {_interval} seconds.";
+            return $"Current regeneration interval is {Seconds(_interval)}.";
         if (!arguments.ParseFloat(out var interval) || interval <= 0)
             return "!Invalid interval.";
         _interval = interval;
-        return $"Regeneration interval set to {interval} seconds.";
+        return $"Regeneration interval set to {Seconds(interval)}.";
     }
+
+    private static string Seconds(float interval) => $"{interval} second{(Mathf.Approximately(interval, 1) ? "" : "s")}";
 
 }
