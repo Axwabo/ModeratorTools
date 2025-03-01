@@ -1,6 +1,7 @@
 ﻿using Axwabo.CommandSystem.Registration;
 using LabApi.Events.CustomHandlers;
 using LabApi.Loader.Features.Plugins;
+using ModeratorTools.Commands.Toggles;
 using PlayerRoles;
 
 namespace ModeratorTools;
@@ -28,6 +29,7 @@ public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
         CustomHandlersManager.RegisterEventsHandler(_handlers);
         PlayerRoleManager.OnRoleChanged += EventHandlers.HandleGodTuts; // TODO: PlayerChangedRoleEvent is currently broken
         CommandRegistrationProcessor.RegisterAll(this);
+        RegenerationCommand.Tick();
     }
 
     public override void Disable()
