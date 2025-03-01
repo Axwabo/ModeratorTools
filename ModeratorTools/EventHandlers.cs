@@ -58,4 +58,20 @@ internal sealed class EventHandlers : CustomEventsHandler
             ev.IsAllowed = false;
     }
 
+    public static void HandleGodTuts(ReferenceHub hub, PlayerRoleBase previous, PlayerRoleBase current)
+    {
+        if (!ModeratorToolsPlugin.Cfg.GodModeTutorials)
+            return;
+        var wasTutorial = previous.RoleTypeId == RoleTypeId.Tutorial;
+        var isTutorial = current.RoleTypeId == RoleTypeId.Tutorial;
+        if (wasTutorial == isTutorial)
+            return;
+        var ccm = hub.characterClassManager;
+        var data = hub.GetData();
+        if (wasTutorial)
+            ccm.GodMode = data.WasInGodMode;
+        else
+            data.WasInGodMode = ccm.GodMode;
+    }
+
 }

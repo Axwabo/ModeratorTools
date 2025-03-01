@@ -1,6 +1,7 @@
 ﻿using Axwabo.CommandSystem.Registration;
 using LabApi.Events.CustomHandlers;
 using LabApi.Loader.Features.Plugins;
+using PlayerRoles;
 
 namespace ModeratorTools;
 
@@ -25,6 +26,7 @@ public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
     {
         Instance = this;
         CustomHandlersManager.RegisterEventsHandler(_handlers);
+        PlayerRoleManager.OnRoleChanged += EventHandlers.HandleGodTuts; // TODO: PlayerChangedRoleEvent is currently broken
         CommandRegistrationProcessor.RegisterAll(this);
     }
 
@@ -32,6 +34,7 @@ public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
     {
         Instance = null;
         CustomHandlersManager.UnregisterEventsHandler(_handlers);
+        PlayerRoleManager.OnRoleChanged -= EventHandlers.HandleGodTuts;
         CommandRegistrationProcessor.UnregisterAll(this);
     }
 

@@ -13,6 +13,8 @@ public sealed class PlayerData
 
     public bool BreakDoors { get; set; }
 
+    public bool WasInGodMode { get; set; }
+
     public bool GodModeBeforeJail { get; set; }
 
 }

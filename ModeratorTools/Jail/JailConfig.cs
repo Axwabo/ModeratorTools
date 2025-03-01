@@ -19,7 +19,7 @@ public sealed class JailConfig
     [Description("If enabled, players jailed in the pocket dimension will have the entry position set to the room they were captured in. If no zone was found, a random room will be picked.")]
     public bool PocketFix { get; set; } = true;
 
-    [Description("Whether jailed players should be in god mode.")]
+    [Description($"Whether jailed players should be in god mode. This setting overrides {nameof(ModeratorToolsConfig.GodModeTutorials)}")]
     public bool GodMode { get; set; }
 
     [Description("Extra jail positions relative to Surface (0; 1000; 0)")]
