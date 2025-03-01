@@ -18,8 +18,9 @@ public sealed class RegenerationCommand : ToggleContainerBase
 
     public static void Tick()
     {
-        if (ModeratorToolsPlugin.Instance != null)
-            Timing.CallDelayed(_interval, Tick);
+        if (ModeratorToolsPlugin.Instance == null)
+            return;
+        Timing.CallDelayed(_interval, Tick);
         foreach (var (player, data) in PlayerDataManager.Defined)
             if (data.Regeneration)
                 player.Heal(_amount);
