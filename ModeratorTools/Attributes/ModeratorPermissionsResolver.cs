@@ -6,7 +6,7 @@ namespace ModeratorTools.Attributes;
 internal sealed class ModeratorPermissionsResolver : Attribute, IAttributeBasedPermissionResolver<ModeratorPermissions>
 {
 
-    public IPermissionChecker CreatePermissionCheckerInstance(ModeratorPermissions attribute)
+    public IPermissionChecker ResolvePermissionChecker(ModeratorPermissions attribute)
         => ModeratorToolsPlugin.Cfg?.VanillaPermissions ?? false
             ? new SimpleVanillaPlayerPermissionChecker(attribute.VanillaPermission)
             : new StringPermissionChecker(attribute.StringPermission);

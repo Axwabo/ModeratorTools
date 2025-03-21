@@ -2,8 +2,9 @@
 
 namespace ModeratorTools.Commands;
 
-// [CommandProperties(CommandHandlerType.RemoteAdmin, "scale", 1, "Set the size of the specified players", "size")]
+[CommandProperties(CommandHandlerType.RemoteAdmin, "scale", 1, "Set the size of the specified players", "size")]
 [Usage("reset", "<scalar>", "<x> <y> <z>")]
+[DoNotAutoRegister]
 public sealed class Scale : FilteredTargetingCommand
 {
 
