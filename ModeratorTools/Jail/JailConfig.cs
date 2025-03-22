@@ -25,6 +25,9 @@ public sealed class JailConfig
     [Description("If enabled, players in jail will not be AFK-kicked.")]
     public bool PreventAfkKick { get; set; } = true;
 
+    [Description($"Used to restrict IP viewing in the jail history GUI. If empty, only mt.jailData is needed. Requires {nameof(ModeratorToolsConfig.VanillaPermissions)} to be disabled.")]
+    public string IPPermissions { get; set; } = "";
+
     [Description("Extra jail positions relative to Surface (0; 1000; 0)")]
     public List<SerializedRotation> ExtraPositions { get; set; } =
     [

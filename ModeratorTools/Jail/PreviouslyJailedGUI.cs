@@ -20,6 +20,9 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
     private const string CopyUserId = "<color=green><link=CP_USERID>\uF0C5</link></color>";
     private const string CopyIp = "<color=green><link=CP_IP>\uF0C5</link></color>";
 
+    private const string DataPermissionString = "jailData";
+    private const PlayerPermissions DataPermissionVanilla = PlayerPermissions.PlayerSensitiveDataAccess;
+
     private static readonly Dictionary<string, List<PreviouslyJailed>> PreviouslyJailedPlayers = new();
     private static readonly Dictionary<string, int> Indexes = new();
 
@@ -32,10 +35,14 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
 
     protected override string OnRequestIPClicked(PlayerCommandSender sender) => TurnPage(sender, true);
 
-    [ModeratorPermissions("jailData", PlayerPermissions.PlayerSensitiveDataAccess)]
+    [ModeratorPermissions(DataPermissionString, DataPermissionVanilla)]
     protected override string OnRequestAuthClicked(PlayerCommandSender sender) => ExposeData(sender);
 
     protected override string OnExternalLookupClicked(PlayerCommandSender sender) => ClearList(sender);
+
+    public bool IsVisibleTo(CommandSender sender) => PreviouslyJailedPlayers.TryGetValue(sender.SenderId, out var list) && list.Count != 0;
+
+    public bool AllowInteractionsWhenHidden => true;
 
     private static string ClearList(CommandSender sender)
     {
@@ -86,7 +93,7 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
                 #{index + 1}
                 Nickname: {entry.Nickname} {CopyId}
                 UserID: {entry.UserID} {CopyUserId}
-                IP Address: {entry.IPAddress} {CopyIp}
+                IP Address: {(CanViewIPs(sender) ? $"{entry.IPAddress} {CopyIp}" : "[REDACTED]")}
                 """.Color("yellow") + DataPadding + Buttons;
     }
 
@@ -107,8 +114,14 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
             list.Add(entry);
     }
 
-    public bool IsVisibleTo(CommandSender sender) => PreviouslyJailedPlayers.TryGetValue(sender.SenderId, out var list) && list.Count != 0;
-
-    public bool AllowInteractionsWhenHidden => true;
+    private static bool CanViewIPs(CommandSender sender)
+    {
+        var cfg = ModeratorToolsPlugin.Cfg;
+        return cfg == null
+            ? StringPermissionChecker.Check(sender, ModeratorPermissionsResolver.EnsurePrefix(DataPermissionString))
+            : cfg.VanillaPermissions
+                ? sender.CheckPermission(DataPermissionVanilla)
+                : StringPermissionChecker.Check(sender, cfg.Jail.IPPermissions);
+    }
 
 }

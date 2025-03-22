@@ -9,6 +9,8 @@ internal sealed class ModeratorPermissionsResolver : Attribute, IAttributeBasedP
     public IPermissionChecker ResolvePermissionChecker(ModeratorPermissions attribute)
         => ModeratorToolsPlugin.Cfg?.VanillaPermissions ?? false
             ? new SimpleVanillaPlayerPermissionChecker(attribute.VanillaPermission)
-            : new StringPermissionChecker($"mt.{attribute.StringPermission}");
+            : new StringPermissionChecker(EnsurePrefix(attribute.StringPermission));
+
+    public static string EnsurePrefix(string permission) => permission.StartsWith("mt.") ? permission : $"mt.{permission}";
 
 }
