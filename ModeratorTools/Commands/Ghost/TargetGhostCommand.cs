@@ -1,12 +1,15 @@
 using Axwabo.CommandSystem.Extensions;
+using Axwabo.CommandSystem.Registration;
 
 namespace ModeratorTools.Commands.Ghost;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "targetGhost", 2, "Makes the specified players invisible to select players")]
 [ModeratorPermissions("targetGhost", PlayerPermissions.Effects)]
 [Usage("<enable/disable> <targets>")]
-public sealed class TargetGhostCommand : FilteredTargetingCommand, ICustomResultCompiler
+public sealed class TargetGhostCommand : FilteredTargetingCommand, IRegistrationFilter, ICustomResultCompiler
 {
+
+    public bool AllowRegistration => GhostExtensions.Enabled;
 
     private bool _state;
 
