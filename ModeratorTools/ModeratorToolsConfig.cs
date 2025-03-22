@@ -20,6 +20,9 @@ public sealed class ModeratorToolsConfig
     [Description("If enabled, tutorial roles will be in god mode.")]
     public bool GodModeTutorials { get; set; }
 
+    [Description("Whether the ghost command should be registered.")]
+    public bool Ghost { get; set; } = true;
+
     public JailConfig Jail { get; set; } = new();
 
     [Description("Position offset to teleport to in rooms which have a fatal/unreachable origin point.")]
