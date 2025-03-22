@@ -3,7 +3,7 @@
 namespace ModeratorTools.Commands.Position;
 
 [CommandProperties("get", "Gets the position of the specified players")]
-[ModeratorPermissions("position.get", PlayerPermissions.GameplayData)]
+[ModeratorPermissions("getPosition", PlayerPermissions.GameplayData)]
 [ShouldAffectSpectators(false)]
 [NoPlayersAffectedMessage(QueriesFailed)]
 public sealed class Get : SeparatedTargetingCommand, ICustomResultCompiler

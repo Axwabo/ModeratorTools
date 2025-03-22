@@ -3,7 +3,7 @@
 namespace ModeratorTools.Commands.Position;
 
 [CommandProperties("set", 3, "Sets the position of the specified players")]
-[ModeratorPermissions("position.set", PlayerPermissions.PlayersManagement)]
+[ModeratorPermissions("setPosition", PlayerPermissions.PlayersManagement)]
 [Usage("<x> <y> <z>")]
 [ShouldAffectSpectators(false)]
 public sealed class Set : FilteredTargetingCommand

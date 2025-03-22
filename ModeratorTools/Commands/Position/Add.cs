@@ -1,7 +1,7 @@
 ﻿namespace ModeratorTools.Commands.Position;
 
 [CommandProperties("add", 3, "Moves the specified players by the given amount, optionally accounting for camera rotation")]
-[ModeratorPermissions("position.set", PlayerPermissions.PlayersManagement)]
+[ModeratorPermissions("setPosition", PlayerPermissions.PlayersManagement)]
 [Usage("<x> <y> <z> [cameraSpace]")]
 [ShouldAffectSpectators(false)]
 public sealed class Add : FilteredTargetingCommand

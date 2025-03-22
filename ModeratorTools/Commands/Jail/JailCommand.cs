@@ -4,7 +4,7 @@ using PlayerRoles.FirstPersonControl;
 namespace ModeratorTools.Commands.Jail;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "jail", "Jails the specified players")]
-[ModeratorPermissions("jail.jail", PlayerPermissions.PlayersManagement)]
+[ModeratorPermissions("jail", PlayerPermissions.PlayersManagement)]
 [Usage("[index]")]
 [ShouldAffectSpectators]
 [NoPlayersAffectedMessage("No players were affected. Did you mean to use unjail or unjailWithMe?")]
