@@ -16,13 +16,9 @@ public sealed class StaffTags : CommandBase
             if (!player.RemoteAdminAccess || player.ReferenceHub.authManager.RemoteAdminGlobalAccess || group == null)
                 continue;
             if (!state)
-            {
                 player.ReferenceHub.serverRoles.TryHideTag();
-                continue;
-            }
-
-            player.GroupName = group.BadgeColor;
-            player.GroupColor = group.BadgeColor;
+            else
+                player.ReferenceHub.serverRoles.RefreshHiddenTag();
         }
 
         return $"Staff tags have been {(state ? "shown" : "hidden")}";
