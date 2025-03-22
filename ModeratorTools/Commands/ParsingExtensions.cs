@@ -1,6 +1,6 @@
 ﻿namespace ModeratorTools.Commands;
 
-public static class VectorParsingExtensions
+public static class ParsingExtensions
 {
 
     public static CommandResult? ParseVector(this ArraySegment<string> arguments, out Vector3 position, int start = 0)
@@ -14,6 +14,22 @@ public static class VectorParsingExtensions
             return "!Invalid Z value.";
         position = new Vector3(x, y, z);
         return CommandResult.Null;
+    }
+
+    public static bool ParseVisibility(this ArraySegment<string> arguments, out bool result, int index = 0)
+    {
+        switch (arguments.At(index).ToLower())
+        {
+            case "show" or "enable" or "true" or "1":
+                result = true;
+                return true;
+            case "hide" or "disable" or "false" or "0":
+                result = false;
+                return true;
+            default:
+                result = false;
+                return false;
+        }
     }
 
 }

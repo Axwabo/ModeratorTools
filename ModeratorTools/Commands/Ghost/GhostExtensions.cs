@@ -7,6 +7,8 @@ public static class GhostExtensions
 
     private static readonly ConditionalWeakTable<Player, GhostController> Controllers = new();
 
+    public static bool Enabled => ModeratorToolsPlugin.Cfg?.Ghost ?? true;
+
     public static GhostController GetGhostController(this ReferenceHub hub) => Controllers.GetOrCreateValue(Player.Get(hub));
 
     public static void OverrideVisibility(ReferenceHub receiver, ReferenceHub target, ref bool isInvisible)

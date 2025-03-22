@@ -8,20 +8,14 @@ public sealed class StaffTags : CommandBase
 
     protected override CommandResult Execute(ArraySegment<string> arguments, CommandSender sender)
     {
-        var value = arguments.At(0).ToLower() switch
-        {
-            "show" or "true" or "1" or "enable" => true,
-            "hide" or "false" or "0" or "disable" => false,
-            _ => (bool?) null
-        };
-        if (!value.HasValue)
+        if (!arguments.ParseVisibility(out var state))
             return CommandResult.Failed(CombinedUsage);
         foreach (var player in Player.List)
         {
             var group = player.UserGroup;
             if (!player.RemoteAdminAccess || player.ReferenceHub.authManager.RemoteAdminGlobalAccess || group == null)
                 continue;
-            if (!value.Value)
+            if (!state)
             {
                 player.ReferenceHub.serverRoles.TryHideTag();
                 continue;
@@ -31,7 +25,7 @@ public sealed class StaffTags : CommandBase
             player.GroupColor = group.BadgeColor;
         }
 
-        return $"Staff tags have been {(value.Value ? "shown" : "hidden")}";
+        return $"Staff tags have been {(state ? "shown" : "hidden")}";
     }
 
 }

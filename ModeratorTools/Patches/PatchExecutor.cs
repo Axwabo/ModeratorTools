@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using ModeratorTools.Commands.Ghost;
 using Logger = LabApi.Features.Console.Logger;
 
 namespace ModeratorTools.Patches;
@@ -10,7 +11,7 @@ internal static class PatchExecutor
 
     public static void Patch()
     {
-        var shouldPatch = ModeratorToolsPlugin.Cfg?.Ghost ?? true;
+        var shouldPatch = GhostExtensions.Enabled;
         if (!shouldPatch)
             return;
         _harmony = new Harmony("Axwabo.ModeratorTools");
