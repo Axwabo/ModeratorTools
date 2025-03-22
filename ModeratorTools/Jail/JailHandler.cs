@@ -31,11 +31,10 @@ public static class JailHandler
         var info = hub.GetInfoWithRole();
         JailConfigUtils.ValidateEntry(hub, info.Info);
         Entries[id] = new JailEntry(info);
-        var ccm = hub.characterClassManager;
         hub.inventory.ClearEverything();
-        hub.GetData().GodModeBeforeJail = ccm.GodMode;
+        hub.GetData().GodModeBeforeJail = hub.characterClassManager.GodMode;
         hub.roleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin);
-        ccm.GodMode = JailConfigUtils.GodMode;
+        JailConfigUtils.OnJailed(hub);
         return true;
     }
 
@@ -48,16 +47,14 @@ public static class JailHandler
         if (!entry.ThisRound)
         {
             hub.roleManager.ServerSetRole(RoleTypeId.Spectator, RoleChangeReason.RemoteAdmin);
-            hub.ApplyPreviousGodMode();
             return true;
         }
 
         JailConfigUtils.ValidateExit(entry.Info.Info);
         entry.Info.SetClassAndApplyInfo(Player.Get(hub));
-        hub.ApplyPreviousGodMode();
+        hub.characterClassManager.GodMode = hub.GetData().GodModeBeforeJail;
+        JailConfigUtils.OnUnjailed(hub);
         return true;
     }
-
-    private static void ApplyPreviousGodMode(this ReferenceHub hub) => hub.characterClassManager.GodMode = hub.GetData().GodModeBeforeJail;
 
 }

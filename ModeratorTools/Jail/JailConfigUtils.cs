@@ -1,4 +1,5 @@
-﻿using Axwabo.CommandSystem.Extensions;
+﻿using AFK;
+using Axwabo.CommandSystem.Extensions;
 using Axwabo.Helpers.PlayerInfo;
 using Axwabo.Helpers.PlayerInfo.Effect;
 using CustomPlayerEffects;
@@ -70,12 +71,25 @@ public static class JailConfigUtils
         return true;
     }
 
-    public static bool GodMode => TryGetConfig(out var config) && config.GodMode;
-
     private static bool TryGetConfig(out JailConfig config)
     {
         config = ModeratorToolsPlugin.Cfg?.Jail;
         return config != null;
+    }
+
+    public static void OnJailed(ReferenceHub hub)
+    {
+        if (!TryGetConfig(out var config))
+            return;
+        hub.characterClassManager.GodMode = config.GodMode;
+        if (config.PreventAfkKick)
+            AFKManager.RemovePlayer(hub);
+    }
+
+    public static void OnUnjailed(ReferenceHub hub)
+    {
+        if (TryGetConfig(out var config) && config.PreventAfkKick)
+            AFKManager.AddPlayer(hub);
     }
 
 }

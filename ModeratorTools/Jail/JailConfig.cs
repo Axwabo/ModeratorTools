@@ -22,6 +22,9 @@ public sealed class JailConfig
     [Description($"Whether jailed players should be in god mode. This setting overrides {nameof(ModeratorToolsConfig.GodModeTutorials)}")]
     public bool GodMode { get; set; }
 
+    [Description("If enabled, players in jail will not be AFK-kicked.")]
+    public bool PreventAfkKick { get; set; } = true;
+
     [Description("Extra jail positions relative to Surface (0; 1000; 0)")]
     public List<SerializedRotation> ExtraPositions { get; set; } =
     [
