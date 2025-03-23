@@ -1,15 +1,15 @@
-﻿using ModeratorTools.Jail;
+﻿using Axwabo.CommandSystem.Extensions;
+using ModeratorTools.Jail;
 using PlayerRoles.FirstPersonControl;
 
 namespace ModeratorTools.Commands.Jail;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "jail", "Jails the specified players")]
 [ModeratorPermissions("jail", PlayerPermissions.PlayersManagement)]
-[Usage("[index]")]
+[Usage("[towerIndex]")]
 [ShouldAffectSpectators]
-[NoPlayersAffectedMessage("No players were affected. Did you mean to use unjail or unjailWithMe?")]
 [JailRegistrationFilter]
-public class JailCommand : FilteredTargetingCommand
+public class JailCommand : FilteredTargetingCommand, ICustomResultCompiler
 {
 
     protected Vector3? TargetPosition;
@@ -32,11 +32,23 @@ public class JailCommand : FilteredTargetingCommand
 
     protected override CommandResult ExecuteOn(ReferenceHub target, ArraySegment<string> arguments, CommandSender sender)
     {
-        if (!target.TryJail(sender))
-            return false;
-        if (TargetPosition.HasValue)
+        var shouldJail = !target.IsJailed();
+        if (shouldJail)
+            target.TryJail(sender);
+        else
+            target.TryUnjail();
+        if (shouldJail && TargetPosition.HasValue)
             target.TryOverridePosition(TargetPosition.Value);
-        return true;
+        return shouldJail ? "Jailed" : "Unjailed";
     }
+
+    public virtual CommandResult? CompileResultCustom(List<CommandResultOnTarget> success, List<CommandResultOnTarget> failures)
+        => success.Count == 0
+            ? CommandResult.Null
+            : string.Join("\n",
+                success.GroupBy(e => e.Response)
+                    .OrderBy(e => e.Key)
+                    .Select(e => $"{e.Key}: {e.CombineNicknames()}")
+            );
 
 }
