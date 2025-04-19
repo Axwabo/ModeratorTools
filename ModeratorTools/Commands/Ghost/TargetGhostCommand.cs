@@ -42,19 +42,19 @@ public sealed class TargetGhostCommand : FilteredTargetingCommand, IRegistration
         return !controller.IsFullyInvisible;
     }
 
-    public CommandResult? CompileResultCustom(List<CommandResultOnTarget> success, List<CommandResultOnTarget> failures) => (success.Count, failures.Count) switch
-    {
-        (0, 0) => CommandResult.Null,
-        (_, 0) => (true, Affected(success, success.Count)),
-        (_, 1) => (true, $"""
-                          {Affected(success.Concat(failures), success.Count + 1)}
-                          {failures[0].Nick} is also fully invisible.
-                          """),
-        (_, _) => (true, $"""
-                          {Affected(success.Concat(failures), success.Count + failures.Count)}
-                          The following players are also fully invisible: {failures.CombineNicknames()}
-                          """)
-    };
+    public CommandResult? CompileResultCustom(List<CommandResultOnTarget> success, List<CommandResultOnTarget> failures)
+        => CommandResult.Succeeded((success.Count, failures.Count) switch
+        {
+            (_, 0) => Affected(success, success.Count),
+            (_, 1) => $"""
+                       {Affected(success.Concat(failures), success.Count + 1)}
+                       {failures[0].Nick} is also fully invisible.
+                       """,
+            (_, _) => $"""
+                       {Affected(success.Concat(failures), success.Count + failures.Count)}
+                       The following players are also fully invisible: {failures.CombineNicknames()}
+                       """
+        });
 
     private string Affected(IEnumerable<CommandResultOnTarget> success, int count)
         => $"{(count == 1 ? $"{success.First().Nick} is" : $"{count} players are")} now {StateString} to the following: {TargetNicknames}";
