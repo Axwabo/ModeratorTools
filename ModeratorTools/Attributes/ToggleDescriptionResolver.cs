@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using Axwabo.CommandSystem.PropertyManager;
 using Axwabo.CommandSystem.PropertyManager.Resolvers;
+using Axwabo.CommandSystem.Registration;
 
 namespace ModeratorTools.Attributes;
 
@@ -10,7 +10,7 @@ internal sealed class ToggleDescriptionResolver : Attribute, ICommandDescription
 
     public string ResolveDescription(ToggleDescriptionAttribute attribute)
     {
-        var name = BaseCommandPropertyManager.CurrentProcessor?.RegisteringCommandType?.GetCustomAttribute<TogglesFeatureAttribute>()?.Name;
+        var name = CommandRegistrationProcessor.Current?.RegisteringCommandType?.GetCustomAttribute<TogglesFeatureAttribute>()?.Name;
         return string.Format(attribute.Format, name ?? "this feature");
     }
 
