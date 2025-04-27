@@ -3,7 +3,6 @@ using Axwabo.CommandSystem.Extensions;
 using Axwabo.Helpers.PlayerInfo;
 using Axwabo.Helpers.PlayerInfo.Effect;
 using CustomPlayerEffects;
-using LightContainmentZoneDecontamination;
 using MapGeneration;
 using PlayerRoles.PlayableScps.Scp106;
 
@@ -13,8 +12,6 @@ public static class JailConfigUtils
 {
 
     private static readonly FacilityZone[] ValidExitZones = [FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance, FacilityZone.Surface];
-
-    public static readonly Vector3 SurfaceUp = Vector3.up * 1001;
 
     private static Vector3 RandomPosition(FacilityZone zone) => Scp106PocketExitFinder.GetPosesForZone(zone).RandomItem().position + Vector3.up;
 
@@ -46,7 +43,7 @@ public static class JailConfigUtils
 
         if (!config.DecontaminationTeleport
             || !Decontamination.IsDecontaminating
-            || info.Position.y is > DecontaminationController.UpperBoundLCZ or < DecontaminationController.LowerBoundLCZ)
+            || info.Position.GetZone() != FacilityZone.LightContainment)
             return;
         var room = Room.Get(Random.value < 0.5f ? RoomName.HczCheckpointA : RoomName.HczCheckpointB).FirstOrDefault();
         if (room != null)
@@ -67,7 +64,10 @@ public static class JailConfigUtils
             return $"!Invalid index. There are only {"extra position".PluralizeWithCount(config.ExtraPositions.Count)}.";
         }
 
-        position = (Vector3) config.ExtraPositions[index] + SurfaceUp;
+        position = (Vector3) config.ExtraPositions[index] + Vector3.up + RoomIdentifier.AllRoomIdentifiers
+            .Where(e => e.Name == RoomName.Outside)
+            .Select(e => e.transform.position)
+            .FirstOrDefault();
         return true;
     }
 

@@ -38,7 +38,7 @@ public sealed class Grenade : FilteredTargetingCommand
         clone.NetworkInfo = new PickupSyncInfo(_template.ItemTypeId, _template.Weight);
         clone.PreviousOwner = new Footprint(target);
         if (clone.TryGetComponent(out Rigidbody rigidbody))
-            rigidbody.velocity = Random.onUnitSphere;
+            rigidbody.linearVelocity = Random.onUnitSphere;
         NetworkServer.Spawn(clone.gameObject);
         clone.ServerActivate();
         return true;

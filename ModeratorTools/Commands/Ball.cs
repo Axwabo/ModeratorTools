@@ -46,7 +46,7 @@ public sealed class Ball : UnifiedTargetingCommand
         var grenade = Object.Instantiate(_template, position, Quaternion.identity);
         grenade.PreviousOwner = new Footprint(sender is PlayerCommandSender {ReferenceHub: var senderHub} ? senderHub : ReferenceHub._hostHub);
         grenade.NetworkInfo = new PickupSyncInfo(ItemType.SCP018, 0, 0, true);
-        grenade.GetComponent<Rigidbody>().velocity = Random.onUnitSphere;
+        grenade.GetComponent<Rigidbody>().linearVelocity = Random.onUnitSphere;
         NetworkServer.Spawn(grenade.gameObject);
         grenade.ServerActivate();
         return true;
