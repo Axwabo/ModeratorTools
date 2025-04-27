@@ -29,7 +29,7 @@ public sealed class DropInventory : FilteredTargetingCommand
     {
         var inventory = target.inventory;
         var info = inventory.UserInventory;
-        if (info.Items.Count == 0 && info.ReserveAmmo.Values.All(e => e != 0))
+        if (info.Items.Count == 0 && info.ReserveAmmo.Values.All(e => e == 0))
             return false;
         if (_types.Count == 0)
         {
