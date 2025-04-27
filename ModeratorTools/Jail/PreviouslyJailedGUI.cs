@@ -88,12 +88,14 @@ public sealed class PreviouslyJailedGUI : ButtonBasedRemoteAdminOption, IOptionV
         var entry = list[index];
         RaClipboard.Send(sender, RaClipboard.RaClipBoardType.PlayerId, entry.Nickname);
         RaClipboard.Send(sender, RaClipboard.RaClipBoardType.UserId, entry.UserID);
-        RaClipboard.Send(sender, RaClipboard.RaClipBoardType.Ip, entry.IPAddress);
+        var canViewIPs = CanViewIPs(sender);
+        if (canViewIPs)
+            RaClipboard.Send(sender, RaClipboard.RaClipBoardType.Ip, entry.IPAddress);
         return $"""
                 #{index + 1}
                 Nickname: {entry.Nickname} {CopyId}
                 UserID: {entry.UserID} {CopyUserId}
-                IP Address: {(CanViewIPs(sender) ? $"{entry.IPAddress} {CopyIp}" : "[REDACTED]")}
+                IP Address: {(canViewIPs ? $"{entry.IPAddress} {CopyIp}" : "[REDACTED]")}
                 """.Color("yellow") + DataPadding + Buttons;
     }
 
