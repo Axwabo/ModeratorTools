@@ -15,6 +15,8 @@ internal sealed class EventHandlers : CustomEventsHandler
 
     public override void OnPlayerJoined(PlayerJoinedEventArgs ev) => MuteHandler.OnJoined(ev.Player);
 
+    public override void OnPlayerLeft(PlayerLeftEventArgs ev) => JailHandler.RemoveEntry(ev.Player.UserId);
+
     public override void OnServerRoundStarted()
     {
         MuteHandler.UnmuteLobby();

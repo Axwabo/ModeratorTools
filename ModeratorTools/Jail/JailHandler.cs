@@ -9,6 +9,8 @@ public static class JailHandler
 
     private static readonly Dictionary<string, JailEntry> Entries = [];
 
+    internal static void RemoveEntry(string userId) => Entries.Remove(userId);
+
     internal static void OnRoundStarted()
     {
         foreach (var kvp in Entries.ToList())
