@@ -60,24 +60,24 @@ internal sealed class EventHandlers : CustomEventsHandler
             ev.IsAllowed = false;
     }
 
-    public static void HandleGodTuts(ReferenceHub hub, PlayerRoleBase previous, PlayerRoleBase current)
+    public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)
     {
         if (!ModeratorToolsPlugin.Cfg.GodModeTutorials)
             return;
-        var wasTutorial = previous.RoleTypeId == RoleTypeId.Tutorial;
-        var isTutorial = current.RoleTypeId == RoleTypeId.Tutorial;
+        var wasTutorial = ev.OldRole == RoleTypeId.Tutorial;
+        var isTutorial = ev.NewRole.RoleTypeId == RoleTypeId.Tutorial;
         if (wasTutorial == isTutorial)
             return;
-        var ccm = hub.characterClassManager;
-        var data = hub.GetData();
+        var p = ev.Player;
+        var data = p.GetData();
         if (wasTutorial)
         {
-            ccm.GodMode = data.WasInGodMode;
+            p.IsGodModeEnabled = data.WasInGodMode;
             return;
         }
 
-        data.WasInGodMode = ccm.GodMode;
-        ccm.GodMode = true;
+        data.WasInGodMode = p.IsGodModeEnabled;
+        p.IsGodModeEnabled = true;
     }
 
 }

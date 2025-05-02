@@ -3,7 +3,6 @@ using LabApi.Events.CustomHandlers;
 using LabApi.Loader.Features.Plugins;
 using ModeratorTools.Commands.Toggles;
 using ModeratorTools.Patches;
-using PlayerRoles;
 
 namespace ModeratorTools;
 
@@ -28,7 +27,6 @@ public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
     {
         Instance = this;
         CustomHandlersManager.RegisterEventsHandler(_handlers);
-        PlayerRoleManager.OnRoleChanged += EventHandlers.HandleGodTuts; // TODO: PlayerChangedRoleEvent is currently broken
         CommandRegistrationProcessor.RegisterAll(this);
         RegenerationCommand.Tick();
         PatchExecutor.Patch();
@@ -38,7 +36,6 @@ public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
     {
         Instance = null;
         CustomHandlersManager.UnregisterEventsHandler(_handlers);
-        PlayerRoleManager.OnRoleChanged -= EventHandlers.HandleGodTuts;
         CommandRegistrationProcessor.UnregisterAll(this);
         PatchExecutor.Unpatch();
     }
