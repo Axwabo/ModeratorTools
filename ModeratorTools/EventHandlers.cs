@@ -2,6 +2,7 @@
 using LabApi.Events.Arguments.Scp096Events;
 using LabApi.Events.Arguments.Scp173Events;
 using LabApi.Events.CustomHandlers;
+using ModeratorTools.Commands.Ghost;
 using ModeratorTools.Commands.Muting;
 using ModeratorTools.Commands.Toggles;
 using ModeratorTools.Jail;
@@ -78,6 +79,12 @@ internal sealed class EventHandlers : CustomEventsHandler
 
         data.WasInGodMode = p.IsGodModeEnabled;
         p.IsGodModeEnabled = true;
+    }
+
+    public override void OnPlayerValidatedVisibility(PlayerValidatedVisibilityEventArgs ev)
+    {
+        if (GhostExtensions.Enabled && ev.Target.IsGhostInvisibleTo(ev.Player))
+            ev.IsVisible = false;
     }
 
 }

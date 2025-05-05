@@ -2,7 +2,6 @@
 using LabApi.Events.CustomHandlers;
 using LabApi.Loader.Features.Plugins;
 using ModeratorTools.Commands.Toggles;
-using ModeratorTools.Patches;
 
 namespace ModeratorTools;
 
@@ -29,7 +28,6 @@ public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
         CustomHandlersManager.RegisterEventsHandler(_handlers);
         CommandRegistrationProcessor.RegisterAll(this);
         RegenerationCommand.Tick();
-        PatchExecutor.Patch();
     }
 
     public override void Disable()
@@ -37,7 +35,6 @@ public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
         Instance = null;
         CustomHandlersManager.UnregisterEventsHandler(_handlers);
         CommandRegistrationProcessor.UnregisterAll(this);
-        PatchExecutor.Unpatch();
     }
 
 }
