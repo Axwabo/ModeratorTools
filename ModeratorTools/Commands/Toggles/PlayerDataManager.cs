@@ -15,7 +15,7 @@ public static class PlayerDataManager
     {
         get
         {
-            foreach (var player in Player.List)
+            foreach (var player in Player.ReadyList)
                 if (Data.TryGetValue(player, out var data))
                     yield return (player, data);
         }

@@ -17,7 +17,7 @@ public static class MuteHandler
 
     public static void UnmuteLobby()
     {
-        foreach (var player in Player.List)
+        foreach (var player in Player.ReadyList)
             if (LobbyMutes.Contains(player.UserId))
                 player.Unmute(false);
         LobbyMutes.Clear();
