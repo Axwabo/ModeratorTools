@@ -9,7 +9,11 @@ public static class JailHandler
 
     private static readonly Dictionary<string, JailEntry> Entries = [];
 
-    internal static void RemoveEntry(string userId) => Entries.Remove(userId);
+    internal static void RemoveEntry(string userId)
+    {
+        if (userId != null)
+            Entries.Remove(userId);
+    }
 
     internal static void OnRoundStarted()
     {
