@@ -46,4 +46,6 @@ public sealed class JailWithMe : JailCommand
             (_, _) => $"Successfully {Op}: {success.CombineNicknames()}\nAlready {Op} players: {failures.CombineNicknames()}"
         }}";
 
+    protected override string NoTargetsFoundMessage => $"!You have been {Op.ToLower()}.\n{base.NoTargetsFoundMessage}";
+
 }
