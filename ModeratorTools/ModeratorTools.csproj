@@ -14,11 +14,14 @@
         <Reference Include="Axwabo.CommandSystem"/>
         <Reference Include="Axwabo.Helpers"/>
         <Reference Include="CommandSystem.Core"/>
-        <Reference Include="LabApi"/>
         <Reference Include="Mirror"/>
         <Reference Include="Pooling"/>
         <Reference Include="UnityEngine.CoreModule"/>
         <Reference Include="UnityEngine.PhysicsModule"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Northwood.LabAPI" Version="1.0.2"/>
     </ItemGroup>
 
 </Project>

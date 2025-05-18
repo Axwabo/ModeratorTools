@@ -13,8 +13,8 @@ This plugin is built using my command system, allowing for the usage of custom p
     - Follow the guide in the README to install Axwabo.Helpers and Harmony
 2. Download the `ModeratorTools.dll` file from the [releases page](https://github.com/Axwabo/ModeratorTools/releases)
 3. Place the file in the `plugins` folder:
-    - Windows: `%appdata%\SCP Secret Laboratory\LabAPI-Beta\plugins\<port>`
-    - Linux: `.config/SCP Secret Laboratory/LabAPI-Beta/plugins/<port>`
+    - Windows: `%appdata%\SCP Secret Laboratory\LabAPI\plugins\<port>`
+    - Linux: `.config/SCP Secret Laboratory/LabAPI/plugins/<port>`
 4. Restart the server
 
 # Permissions
@@ -27,8 +27,8 @@ To switch to using base-game permissions, set `vanilla_permissions` to `true` in
 You'll have to configure LabAPI permissions for staff to be able to use commands.
 The permissions configuration is located at:
 
-- Windows: `%appdata%\SCP Secret Laboratory\LabAPI-Beta\configs\permissions.yml`
-- Linux: `.config/SCP Secret Laboratory/LabAPI-Beta/configs/permissions.yml`
+- Windows: `%appdata%\SCP Secret Laboratory\LabAPI\configs\permissions.yml`
+- Linux: `.config/SCP Secret Laboratory/LabAPI/configs/permissions.yml`
 
 > [!CAUTION]
 > Wildcards should only be given to groups with maximum trust, such as the owner.
