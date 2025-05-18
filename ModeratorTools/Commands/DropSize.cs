@@ -19,7 +19,7 @@ public sealed class DropSize : FilteredTargetingCommand
         if (!arguments.ParseItem(out var type) || !InventoryItemLoader.AvailableItems.TryGetValue(type, out _item))
             return "!Invalid item type.";
         if (arguments.Count != 2)
-            return arguments.Count < 5
+            return arguments.Count < 4
                 ? CommandResult.Failed(CombinedUsage)
                 : arguments.ParseVector(out _scale, 1);
         if (!arguments.ParseFloat(out var scalar, 1))
