@@ -23,7 +23,7 @@ public sealed class Ahp : FilteredTargetingCommand
         var stat = target.playerStats.GetModule<AhpStat>();
         if (_value == 0)
             stat.ServerKillAllProcesses();
-        else if (stat._activeProcesses.Count != 0)
+        else if (stat._activeProcesses.Count == 0)
             stat.ServerAddProcess(_value);
         else
             stat._activeProcesses[0].CurrentAmount = _value;
