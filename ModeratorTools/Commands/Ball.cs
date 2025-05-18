@@ -34,7 +34,7 @@ public sealed class Ball : UnifiedTargetingCommand
         if (count == 0)
             return "!No players were affected.";
         if (count == 1)
-            return $"{target} has received a bouncing ball!";
+            return $"{target!.nicknameSync.MyNick} has received a bouncing ball!";
         Cassie.Message("pitch_1.5 xmas_bouncyballs . pitch_1", false, false, false);
         return $"The balls are bouncing for {count} players!";
     }
