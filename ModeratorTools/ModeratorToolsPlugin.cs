@@ -18,7 +18,8 @@ public sealed class ModeratorToolsPlugin : Plugin<ModeratorToolsConfig>
     public override string Description => "Tools for server staff";
     public override string Author => "Axwabo";
     public override Version Version => GetType().Assembly.GetName().Version;
-    public override Version RequiredApiVersion { get; } = new(1, 0, 0);
+    public override Version RequiredApiVersion { get; } = new(1, 1, 1);
+    public override bool IsTransparent => true;
 
     private readonly EventHandlers _handlers = new();
 
