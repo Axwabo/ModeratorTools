@@ -1,6 +1,7 @@
 ﻿using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.Scp096Events;
 using LabApi.Events.Arguments.Scp173Events;
+using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.CustomHandlers;
 using ModeratorTools.Commands.Ghost;
 using ModeratorTools.Commands.Muting;
@@ -24,6 +25,11 @@ internal sealed class EventHandlers : CustomEventsHandler
         JailHandler.OnRoundStarted();
     }
 
+    public override void OnServerRoundEnded(RoundEndedEventArgs ev)
+    {
+        JailHandler.OnRoundEnded();
+    }
+    
     public override void OnPlayerInteractingDoor(PlayerInteractingDoorEventArgs ev)
     {
         var p = ev.Player;

@@ -27,6 +27,9 @@ public sealed class JailConfig
 
     [Description($"Used to restrict IP viewing in the jail history GUI. If empty, only mt.jailData is needed. Requires {nameof(ModeratorToolsConfig.VanillaPermissions)} to be disabled.")]
     public string IPPermissions { get; set; } = "";
+    
+    [Description("If enabled, preserves jail entries between rounds.")]
+    public bool PreserveJails { get; set; } = true;
 
     [Description("Extra jail positions relative to Surface")]
     public List<SerializedRotation> ExtraPositions { get; set; } =

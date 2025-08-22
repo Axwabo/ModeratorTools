@@ -27,6 +27,11 @@ public static class JailHandler
         }
     }
 
+    internal static void OnRoundEnded()
+    {
+        if (!ModeratorToolsPlugin.Cfg.Jail.PreserveJails) Entries.Clear();
+    }
+
     public static bool IsJailed(this ReferenceHub hub) => Entries.TryGetValue(hub.authManager.UserId, out var entry) && entry.ThisRound;
 
     public static bool TryJail(this ReferenceHub hub, CommandSender sender = null)
