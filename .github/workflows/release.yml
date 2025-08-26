@@ -34,6 +34,22 @@ jobs:
         working-directory: ${{ env.ReferencePath }}
         run: mv Assembly-CSharp-Publicized.dll Assembly-CSharp.dll
 
+      - name: Download CommandSystem
+        uses: robinraju/release-downloader@v1.12
+        with:
+          repository: 'Axwabo/CommandSystem'
+          latest: true
+          fileName: '*'
+          out-file-path: ${{ env.ReferencePath }}
+  
+      - name: Download SCPSL-Helpers
+        uses: robinraju/release-downloader@v1.12
+        with:
+          repository: "Axwabo/SCPSL-Helpers"
+          latest: true
+          fileName: '*'
+          out-file-path: ${{ env.ReferencePath }}
+
       - name: Build
         run: dotnet build -c:Release -o Output
 
