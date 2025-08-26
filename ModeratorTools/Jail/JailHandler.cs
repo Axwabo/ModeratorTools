@@ -7,7 +7,7 @@ namespace ModeratorTools.Jail;
 public static class JailHandler
 {
 
-    private static readonly Dictionary<string, JailEntry> Entries = [];
+    private static readonly Dictionary<string, IPlayerInfoWithRole> Entries = [];
 
     internal static void RemoveEntry(string userId)
     {
@@ -15,19 +15,9 @@ public static class JailHandler
             Entries.Remove(userId);
     }
 
-    internal static void OnRoundStarted()
-    {
-        foreach (var kvp in Entries.ToList())
-        {
-            var entry = kvp.Value;
-            if (entry.ThisRound)
-                entry.ThisRound = false;
-            else
-                Entries.Remove(kvp.Key);
-        }
-    }
+    internal static void ClearEntries() => Entries.Clear();
 
-    public static bool IsJailed(this ReferenceHub hub) => Entries.TryGetValue(hub.authManager.UserId, out var entry) && entry.ThisRound;
+    public static bool IsJailed(this ReferenceHub hub) => Entries.ContainsKey(hub.authManager.UserId);
 
     public static bool TryJail(this ReferenceHub hub, CommandSender sender = null)
     {
@@ -38,7 +28,7 @@ public static class JailHandler
             PreviouslyJailedGUI.AddPlayer(sender, hub);
         var info = hub.GetInfoWithRole();
         JailConfigUtils.ValidateEntry(hub, info.Info);
-        Entries[id] = new JailEntry(info);
+        Entries[id] = info;
         hub.inventory.ClearEverything();
         hub.GetData().GodModeBeforeJail = hub.characterClassManager.GodMode;
         hub.roleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin);
@@ -52,14 +42,8 @@ public static class JailHandler
         if (!Entries.TryGetValue(id, out var entry))
             return false;
         Entries.Remove(id);
-        if (!entry.ThisRound)
-        {
-            hub.roleManager.ServerSetRole(RoleTypeId.Spectator, RoleChangeReason.RemoteAdmin);
-            return true;
-        }
-
-        JailConfigUtils.ValidateExit(entry.Info.Info);
-        entry.Info.SetClassAndApplyInfo(Player.Get(hub));
+        JailConfigUtils.ValidateExit(entry.Info);
+        entry.SetClassAndApplyInfo(Player.Get(hub));
         hub.characterClassManager.GodMode = hub.GetData().GodModeBeforeJail;
         JailConfigUtils.OnUnjailed(hub);
         return true;
