@@ -30,9 +30,11 @@ jobs:
           wget -O "References.zip" ${{ env.ReferenceUrl }}
           unzip -d ${{ env.ReferencePath }} "References.zip"
 
-      - name: Rename Assembly-CSharp
+      - name: Rename Publicized Assemblies
         working-directory: ${{ env.ReferencePath }}
-        run: mv Assembly-CSharp-Publicized.dll Assembly-CSharp.dll
+        run: |
+          mv Assembly-CSharp-Publicized.dll Assembly-CSharp.dll
+          mv Mirror-Publicized.dll Mirror.dll
 
       - name: Download CommandSystem
         uses: robinraju/release-downloader@v1.12
