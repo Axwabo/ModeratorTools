@@ -1,6 +1,4 @@
-﻿using Mirror;
-
-namespace ModeratorTools.Commands;
+﻿namespace ModeratorTools.Commands;
 
 [CommandProperties(CommandHandlerType.RemoteAdmin, "scale", 1, "Set the size of the specified players", "size")]
 [ModeratorPermissions("scale", PlayerPermissions.PlayersManagement)]
@@ -30,13 +28,10 @@ public sealed class Scale : FilteredTargetingCommand
 
     protected override CommandResult ExecuteOn(ReferenceHub target, ArraySegment<string> arguments, CommandSender sender)
     {
-        var transform = target.transform;
-        if (transform.localScale == _scale)
+        var player = Player.Get(target);
+        if (player.Scale == _scale)
             return false;
-        transform.localScale = _scale;
-        var identity = target.networkIdentity;
-        foreach (var p in Player.ReadyList)
-            NetworkServer.SendSpawnMessage(identity, p.Connection); // TODO: wait for an official player scaling method
+        player.Scale = _scale;
         return true;
     }
 

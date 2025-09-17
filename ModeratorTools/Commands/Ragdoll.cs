@@ -3,6 +3,7 @@ using Mirror;
 using PlayerRoles;
 using PlayerRoles.Ragdolls;
 using PlayerStatsSystem;
+using RelativePositioning;
 
 namespace ModeratorTools.Commands;
 
@@ -44,7 +45,7 @@ public sealed class Ragdoll : FilteredTargetingCommand
             var position = transform.position;
             var rotation = transform.rotation;
             var clone = Object.Instantiate(template, position, rotation);
-            clone.NetworkInfo = new RagdollData(null, DamageHandler, roleTypeId, position, rotation, "SCP-343", NetworkTime.time);
+            clone.NetworkInfo = new RagdollData(null, DamageHandler, roleTypeId, new RelativePosition(position), rotation, "SCP-343", NetworkTime.time);
             NetworkServer.Spawn(clone.gameObject);
             yield return Timing.WaitForOneFrame;
         }
