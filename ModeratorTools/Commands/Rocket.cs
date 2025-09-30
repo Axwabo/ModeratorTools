@@ -51,14 +51,23 @@ public sealed class Rocket : FilteredTargetingCommand, ICustomResultCompiler
     {
         target.playerEffectsController.EnableEffect<Ensnared>();
         module.Motor.GravityController.Gravity = Vector3.zero;
+        var life = target.roleManager.CurrentRole.UniqueLifeIdentifier;
         for (var i = 0; i < 50; i++)
         {
             if (!target)
                 yield break;
+            if (life != target.roleManager.CurrentRole.UniqueLifeIdentifier)
+            {
+                if (target.TryGetFpcModule(out module) && module.Motor.GravityController.Gravity == Vector3.zero)
+                    module.Motor.GravityController.Gravity = FpcGravityController.DefaultGravity;
+                yield break;
+            }
+
             module.ServerOverridePosition(module.Position + Vector3.up * speed);
             yield return Timing.WaitForOneFrame;
         }
 
+        module.Motor.GravityController.Gravity = FpcGravityController.DefaultGravity;
         target.playerStats.KillPlayer(DamageHandler);
         ExplosionUtils.ServerSpawnEffect(module.Position, ItemType.GrenadeHE);
     }
