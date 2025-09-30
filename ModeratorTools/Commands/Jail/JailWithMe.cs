@@ -33,7 +33,15 @@ public sealed class JailWithMe : JailCommand
     }
 
     protected override CommandResult ExecuteOn(ReferenceHub target, ArraySegment<string> arguments, CommandSender sender)
-        => _shouldJail ? target.TryJail(sender) : target.TryUnjail();
+    {
+        if (!_shouldJail)
+            return target.TryUnjail();
+        if (!target.TryJail(sender))
+            return false;
+        if (TargetPosition.HasValue)
+            target.TryOverridePosition(TargetPosition.Value);
+        return true;
+    }
 
     public override CommandResult? CompileResultCustom(List<CommandResultOnTarget> success, List<CommandResultOnTarget> failures)
         => $"You have been {Op.ToLower()}.\n{(success.Count, failures.Count) switch
