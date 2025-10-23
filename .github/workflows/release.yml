@@ -2,7 +2,7 @@ name: Release
 
 on:
   release:
-    types: [ created ]
+    types: [ published ]
 
 permissions:
   contents: write
@@ -41,6 +41,7 @@ jobs:
         with:
           repository: 'Axwabo/CommandSystem'
           latest: true
+          preRelease: true
           fileName: '*'
           out-file-path: ${{ env.ReferencePath }}
   
@@ -49,6 +50,7 @@ jobs:
         with:
           repository: "Axwabo/SCPSL-Helpers"
           latest: true
+          preRelease: true
           fileName: '*'
           out-file-path: ${{ env.ReferencePath }}
 
