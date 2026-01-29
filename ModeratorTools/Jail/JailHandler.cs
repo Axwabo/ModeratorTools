@@ -30,7 +30,7 @@ public static class JailHandler
         JailConfigUtils.ValidateEntry(hub, info.Info);
         Entries[id] = info;
         hub.inventory.ClearEverything();
-        hub.GetData().GodModeBeforeJail = hub.characterClassManager.GodMode;
+        hub.Data.GodModeBeforeJail = hub.characterClassManager.GodMode;
         hub.roleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin);
         JailConfigUtils.OnJailed(hub);
         return true;
@@ -44,7 +44,7 @@ public static class JailHandler
         Entries.Remove(id);
         JailConfigUtils.ValidateExit(entry.Info);
         entry.SetClassAndApplyInfo(Player.Get(hub));
-        hub.characterClassManager.GodMode = hub.GetData().GodModeBeforeJail;
+        hub.characterClassManager.GodMode = hub.Data.GodModeBeforeJail;
         JailConfigUtils.OnUnjailed(hub);
         return true;
     }

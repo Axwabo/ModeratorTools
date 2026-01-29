@@ -17,7 +17,7 @@ public sealed class GhostCommand : FilteredTargetingCommand
 
     protected override CommandResult ExecuteOn(ReferenceHub target, ArraySegment<string> arguments, CommandSender sender)
     {
-        var controller = target.GetGhostController();
+        var controller = target.GhostController;
         if (controller.IsFullyInvisible == _state)
             return false;
         controller.IsFullyInvisible = _state;

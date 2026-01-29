@@ -27,7 +27,7 @@ internal sealed class EventHandlers : CustomEventsHandler
         var p = ev.Player;
         if (ev.Door.IsLocked && !p.IsBypassEnabled)
             return;
-        var data = p.GetData();
+        var data = p.Data;
         switch (ev.Door)
         {
             case Gate gate when data.PryGates && gate.TryPry(p):
@@ -41,21 +41,21 @@ internal sealed class EventHandlers : CustomEventsHandler
     {
         if (ev.DamageHandler is AttackerDamageHandler {Attacker.Hub: var attacker} adh
             && attacker != null
-            && attacker.GetData().InstantKill)
+            && attacker.Data.InstantKill)
             adh.Damage = -1;
     }
 
     public override void OnScp096AddingTarget(Scp096AddingTargetEventArgs ev)
     {
         var p = ev.Target;
-        if (ModeratorToolsPlugin.Cfg.TutorialsImmuneToScp096 && p.Role == RoleTypeId.Tutorial || p.GetData().Scp096Immunity)
+        if (ModeratorToolsPlugin.Cfg.TutorialsImmuneToScp096 && p.Role == RoleTypeId.Tutorial || p.Data.Scp096Immunity)
             ev.IsAllowed = false;
     }
 
     public override void OnScp173AddingObserver(Scp173AddingObserverEventArgs ev)
     {
         var p = ev.Target;
-        if (ModeratorToolsPlugin.Cfg.TutorialsImmuneToScp173 && p.Role == RoleTypeId.Tutorial || p.GetData().Scp173Immunity)
+        if (ModeratorToolsPlugin.Cfg.TutorialsImmuneToScp173 && p.Role == RoleTypeId.Tutorial || p.Data.Scp173Immunity)
             ev.IsAllowed = false;
     }
 
@@ -68,7 +68,7 @@ internal sealed class EventHandlers : CustomEventsHandler
         if (wasTutorial == isTutorial)
             return;
         var p = ev.Player;
-        var data = p.GetData();
+        var data = p.Data;
         if (wasTutorial)
         {
             p.IsGodModeEnabled = data.WasInGodMode;

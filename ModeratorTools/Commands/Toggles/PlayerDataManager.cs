@@ -7,9 +7,19 @@ public static class PlayerDataManager
 
     private static readonly ConditionalWeakTable<Player, PlayerData> Data = new();
 
-    public static PlayerData GetData(this Player player) => Data.GetOrCreateValue(player);
+    extension(Player player)
+    {
 
-    public static PlayerData GetData(this ReferenceHub hub) => Player.Get(hub).GetData();
+        public PlayerData Data => Data.GetOrCreateValue(player);
+
+    }
+
+    extension(ReferenceHub hub)
+    {
+
+        public PlayerData Data => Player.Get(hub).Data;
+
+    }
 
     public static IEnumerable<(Player Player, PlayerData Data)> Defined
     {

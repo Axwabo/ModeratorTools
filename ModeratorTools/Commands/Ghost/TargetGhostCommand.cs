@@ -33,7 +33,7 @@ public sealed class TargetGhostCommand : FilteredTargetingCommand, IRegistration
 
     protected override CommandResult ExecuteOn(ReferenceHub target, ArraySegment<string> arguments, CommandSender sender)
     {
-        var controller = target.GetGhostController();
+        var controller = target.GhostController;
         var ids = _toTargets.Select(e => e.Id);
         if (_state)
             controller.InvisibleTo.UnionWith(ids);

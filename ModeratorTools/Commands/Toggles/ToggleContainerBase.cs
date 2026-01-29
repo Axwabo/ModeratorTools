@@ -43,7 +43,7 @@ public abstract class ToggleContainerBase : ContainerCommand
         foreach (var hub in targets)
         {
             var nick = hub.nicknameSync.MyNick;
-            var data = hub.GetData();
+            var data = hub.Data;
             var state = this[data] = !this[data];
             if (state)
                 enabled.Add(nick);
@@ -81,7 +81,7 @@ public abstract class ToggleContainerBase : ContainerCommand
         var affected = new List<string>();
         foreach (var hub in targets)
         {
-            var data = hub.GetData();
+            var data = hub.Data;
             if (this[data] == enabled)
                 continue;
             this[data] = enabled;
