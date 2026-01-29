@@ -23,6 +23,8 @@ public static class GhostExtensions
 
         public bool IsGhostInvisibleTo(Player observer)
         {
+            if (ReferenceEquals(player, null) || ReferenceEquals(observer, null) || string.IsNullOrEmpty(observer.UserId))
+                return false;
             var controller = player.GhostController;
             return controller.IsFullyInvisible || controller.InvisibleTo.Contains(observer.UserId);
         }
