@@ -17,6 +17,9 @@ public sealed class ModeratorToolsConfig
     [Description("If enabled, tutorial roles will not count as observers of SCP-173.")]
     public bool TutorialsImmuneToScp173 { get; set; }
 
+    [Description("If enabled, tutorial roles will not be kicked for AFK.")]
+    public bool TutorialsImmuneToAfkKick { get; set; }
+
     [Description("If enabled, tutorial roles will be in god mode.")]
     public bool GodModeTutorials { get; set; }
 

@@ -17,6 +17,8 @@ public sealed class PlayerData
 
     public bool WasInGodMode { get; set; }
 
+    public bool WasAfkImmune { get; set; }
+
     public bool GodModeBeforeJail { get; set; }
 
 }

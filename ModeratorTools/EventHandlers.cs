@@ -1,4 +1,5 @@
-﻿using LabApi.Events.Arguments.PlayerEvents;
+﻿using AFK;
+using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.Scp096Events;
 using LabApi.Events.Arguments.Scp173Events;
 using LabApi.Events.CustomHandlers;
@@ -61,13 +62,24 @@ internal sealed class EventHandlers : CustomEventsHandler
 
     public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)
     {
-        if (!ModeratorToolsPlugin.Cfg.GodModeTutorials)
-            return;
         var wasTutorial = ev.OldRole == RoleTypeId.Tutorial;
         var isTutorial = ev.NewRole.RoleTypeId == RoleTypeId.Tutorial;
         if (wasTutorial == isTutorial)
             return;
-        var p = ev.Player;
+        if (ModeratorToolsPlugin.Cfg.GodModeTutorials)
+            HandleGodTutorial(wasTutorial, ev.Player);
+        if (ModeratorToolsPlugin.Cfg.TutorialsImmuneToAfkKick)
+            HandleAfkTutorial(wasTutorial, ev.Player);
+    }
+
+    public override void OnPlayerValidatedVisibility(PlayerValidatedVisibilityEventArgs ev)
+    {
+        if (GhostExtensions.Enabled && ev.Target.IsGhostInvisibleTo(ev.Player))
+            ev.IsVisible = false;
+    }
+
+    private static void HandleGodTutorial(bool wasTutorial, Player p)
+    {
         var data = p.Data;
         if (wasTutorial)
         {
@@ -79,10 +91,39 @@ internal sealed class EventHandlers : CustomEventsHandler
         p.IsGodModeEnabled = true;
     }
 
-    public override void OnPlayerValidatedVisibility(PlayerValidatedVisibilityEventArgs ev)
+    private static void HandleAfkTutorial(bool wasTutorial, Player p)
     {
-        if (GhostExtensions.Enabled && ev.Target.IsGhostInvisibleTo(ev.Player))
-            ev.IsVisible = false;
+        var data = p.Data;
+        if (wasTutorial)
+        {
+            p.AfkImmune = data.WasAfkImmune;
+            return;
+        }
+
+        data.WasAfkImmune = p.AfkImmune;
+        p.AfkImmune = true;
+    }
+
+}
+
+file static class PlayerExtensions
+{
+
+    extension(Player player)
+    {
+
+        public bool AfkImmune
+        {
+            get => !AFKManager.AFKTimers.ContainsKey(player.ReferenceHub);
+            set
+            {
+                if (value)
+                    AFKManager.RemovePlayer(player.ReferenceHub);
+                else
+                    AFKManager.AddPlayer(player.ReferenceHub);
+            }
+        }
+
     }
 
 }
