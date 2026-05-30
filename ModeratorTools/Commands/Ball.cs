@@ -1,4 +1,5 @@
-﻿using Footprinting;
+﻿using Cassie;
+using Footprinting;
 using InventorySystem;
 using InventorySystem.Items.Pickups;
 using InventorySystem.Items.ThrowableProjectiles;
@@ -13,6 +14,8 @@ namespace ModeratorTools.Commands;
 [ShouldAffectSpectators(false)]
 public sealed class Ball : UnifiedTargetingCommand
 {
+
+    private static readonly CassieTtsPayload Payload = new("pitch_1.5 xmas_bouncyballs . pitch_1", false, false);
 
     private ThrownProjectile _template;
 
@@ -35,7 +38,7 @@ public sealed class Ball : UnifiedTargetingCommand
             return "!No players were affected.";
         if (count == 1)
             return $"{target!.nicknameSync.MyNick} has received a bouncing ball!";
-        LabApi.Features.Wrappers.Cassie.Message("pitch_1.5 xmas_bouncyballs . pitch_1", false, false, false);
+        Announcer.Message(Payload, glitchScale: 0);
         return $"The balls are bouncing for {count} players!";
     }
 
